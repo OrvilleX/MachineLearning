@@ -14,6 +14,9 @@
 ## 基础知识  
 
 * [正态分布含义](https://www.zhihu.com/question/56891433)  
+* [高斯分布](https://baijiahao.baidu.com/s?id=1621087027738177317&wfr=spider&for=pc)  
+* [泊松分布](https://www.matongxue.com/madocs/858)  
+* [伯努利分布](https://www.cnblogs.com/jmilkfan-fanguiju/p/10589773.html)   
 
 
 ## 监督学习  
@@ -50,6 +53,7 @@
 
 * [Numpy原始算法](./treeWithRaw.py)  
 * [sklearn库使用](./treeWithMglearn.py)  
+* [随机森林](./randomtreeWithMglearn.py)  
 
 树回归（预测）相关源码  
 * [Numpy原始算法](./regTreesWithRaw.py)  
@@ -105,6 +109,14 @@
 * [Numpy原始算法](./svmMLiA.py)  
 * [sklearn库使用](./svmWithMglearn.py)  
 
+### 线性回归  
+
+对于了解线性回归可以参考[本文章](https://zhuanlan.zhihu.com/p/53979679) 进行相关关系，其中还包含了关于局部加权线性回归方式，
+针对常规的数据这是没有问题的，但是如果样本数据中的特征多余样本数据本身那么就存在问题了，此时我们就需要通过引入岭回归、lasso与前向
+逐步回归算法。  
+
+* [numpy原始算法与sklearn库使用](./regressionWithRaw.py)  
+
 ### 元计算  
 
 上面我们介绍了多个分类算法，为了得到最好的结果我们有时可能需要结合不同算法或相同算法不同配置进行组合，这就叫做元计算。本篇将主要介绍
@@ -114,7 +126,13 @@
 ## 无监督学习  
 
 
+
 ## 其他算法与工具  
+
+### 扩展算法  
+
+1. [黎曼和估算与面积法](https://zhuanlan.zhihu.com/p/76304788)  
+
 
 ### 特征归一化  
 
@@ -131,6 +149,24 @@
 2. [Z-score标准化方法](https://blog.csdn.net/Orange_Spotty_Cat/article/details/80312154)
 3. 非线性归一化
 4. L2范数归一化方法  
+
+### 指标  
+
+即衡量目标的单位或方法，这里我们列举几个在互联网中比较常见的指标进行说明：  
+
+1. PV：页面浏览树数，即每天的点击数。
+2. UV：独立用户数，即每天每个用户的浏览数。
+3. DAU：日活跃用户数，即每天活跃的用户数量。  
+
+当然指标不仅仅只有上面还有`MAU`、`LTV`和`ARPU`等，每个指标都要满足以下几点：
+
+* 数字化
+* 易衡量
+* 意义清晰  
+* 周期适当  
+* 尽量客观  
+
+
 
 ### 依赖工具  
 
