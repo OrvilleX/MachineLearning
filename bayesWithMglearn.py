@@ -7,6 +7,9 @@ import bayesWithRaw as bayes
 GaussianNB 适用于通用场景
 BernoulliNB 适用于属性代表是否关系
 MultinomialNB 适用于属性用于计数场景
+
+通过max_depth可以控制树的深度
+
 '''
 
 def mnbtest():

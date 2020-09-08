@@ -1,6 +1,6 @@
 from math import log
 import operator
-import treePlotter
+
 
 # 计算数据香农熵
 def clacShannonEnt(dataSet):
@@ -17,6 +17,7 @@ def clacShannonEnt(dataSet):
         shannonEnt -= prob * log(prob,2)
     return shannonEnt
 
+
 def createDataSet():
     dataSet = [[1, 1, 'yes'],
                [1, 1, 'yes'],
@@ -25,6 +26,7 @@ def createDataSet():
                [0, 1, 'no']]
     labels = ['no surfacing', 'flippers']
     return dataSet, labels
+
 
 # 划分数据集
 def splitDataSet(dataSet, axis, value):
@@ -35,6 +37,7 @@ def splitDataSet(dataSet, axis, value):
             reducedFeatVec.extend(featVec[axis+1:])
             retDataSet.append(reducedFeatVec)
     return retDataSet
+
 
 # 根据熵选择最优数据划分方式
 def chooseBestFeatureToSplit(dataSet):
@@ -94,24 +97,28 @@ def classify(inputTree, featLabels, testVec):
                 classLabel = secondDict[key]
     return classLabel
 
-# 决策树持久化
 
+# 将决策树持久化到文件
 def storeTree(inputTree, filename):
     import pickle
     fw = open(filename, 'w')
     pickle.dump(inputTree, fw)
     fw.close()
 
+
+# 从文件读取决策树
 def grabTree(filename):
     import pickle
     fr = open(filename)
     return pickle.load(fr)
+
 
 def main():
     myDat, labels = createDataSet()
     myTree = createTree(myDat, labels[:])
     result = classify(myTree, labels, [1,1])
     print(result)
+
 
 if __name__ == '__main__':
     main()

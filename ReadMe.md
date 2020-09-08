@@ -28,8 +28,7 @@
 该算法主要采用距离算法将未分类的测试数据与样本数据进行运算得出K个距离最近的数据，并根据少数服从
 多数原则返回最终的分类结果，其中相关的实现代码可以参考如下。  
 
-* [Numpy原始算法](./knnWithRaw.py)  
-* [sklearn库使用](./knnWithMglearn.py)  
+* [KNN算法](./KNN.py)  
 
 由于本算法的核心依赖距离算法，所以根据实际的使用场景选择适当的距离算法进行替换，当前可以利用的距离、
 算法主要有：  
@@ -51,8 +50,8 @@
 往往会有多个选择，但是考虑计算机本身的特点以及效率等，往往会会采用二叉树。相关的算法可以通过如下文件
 进行学习：  
 
-* [Numpy原始算法](./treeWithRaw.py)  
-* [sklearn库使用](./treeWithMglearn.py)  
+* [Numpy原始算法](tree/treeWithRaw.py)  
+* [sklearn库使用](tree/treeWithMglearn.py)  
 * [随机森林](./randomtreeWithMglearn.py)  
 
 树回归（预测）相关源码  
