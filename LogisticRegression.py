@@ -1,10 +1,12 @@
+from sklearn.linear_model import LogisticRegression
 from numpy import *
 import tool
 
+
 def sigmoid(intx: int):
-    '''
+    """
     S函数
-    '''
+    """
     if intx >= 0:
         return 1.0/(1+exp(-intx))
     else:
@@ -12,9 +14,9 @@ def sigmoid(intx: int):
 
 
 def gradascent(datamatin, classlabels):
-    '''
+    """
     梯度提升算法
-    '''
+    """
     datamatrix = mat(datamatin)
     labelmat = mat(classlabels).transpose()
     m,n = shape(datamatrix)
@@ -29,9 +31,9 @@ def gradascent(datamatin, classlabels):
 
 
 def stocgradascent(datamatrix, classlabels, numiter = 150):
-    '''
+    """
     随机梯度提升算法
-    '''
+    """
     m,n = shape(datamatrix)
     weights = ones(n)
     for j in range(numiter):
@@ -48,9 +50,9 @@ def stocgradascent(datamatrix, classlabels, numiter = 150):
 
 
 def classifyvector(inx, weights):
-    '''
+    """
     计算结果
-    '''
+    """
     prob = sigmoid(sum(inx*weights))
     if prob > 0.5:
         return 1.0
@@ -73,5 +75,20 @@ def colictest():
     return errorrate
 
 
+def testLogistic():
+    """
+    基于sklearn的Logistic回归
+    """
+    logreg = LogisticRegression(C=1)
+    trainingset, traininglabels = tool.file2floatMatrix('horseColicTraining.txt', 21)
+    testset, testlabels = tool.file2floatMatrix('horseColicTest.txt', 21)
+    logreg.fit(trainingset, traininglabels)
+    print("logreg.coef_: {}".format(logreg.coef_))
+    print("logreg.intercept_: {}".format(logreg.intercept_))
+    print("Training set score: {:.2f}".format(logreg.score(trainingset, traininglabels)))
+    print("Test set score: {:.2f}".format(logreg.score(testset, testlabels)))
+
+
 if __name__ == '__main__':
     colictest()
+    # testLogistic()

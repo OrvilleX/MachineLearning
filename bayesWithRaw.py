@@ -66,7 +66,6 @@ def trainBNO(trainmatrix, traincategory):
 def classifynb(vec2classify, p0vec, p1vec, pclass1):
     '''
     计算结果
-    :return:
     '''
     p1 = sum(vec2classify * p1vec) + log(pclass1)
     p0 = sum(vec2classify * p0vec) + log(1.0 - pclass1)

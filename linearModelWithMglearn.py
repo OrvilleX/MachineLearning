@@ -3,20 +3,8 @@ from numpy import *
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Ridge
 from sklearn.linear_model import Lasso
-from sklearn.linear_model import LogisticRegression
 from sklearn.svm import LinearSVC
 from sklearn.naive_bayes import GaussianNB
-
-
-def testLogistic():
-    logreg = LogisticRegression(C=1)
-    trainingset, traininglabels = tool.file2floatMatrix('horseColicTraining.txt', 21)
-    testset, testlabels = tool.file2floatMatrix('horseColicTest.txt', 21)
-    logreg.fit(trainingset, traininglabels)
-    print("logreg.coef_: {}".format(logreg.coef_))
-    print("logreg.intercept_: {}".format(logreg.intercept_))
-    print("Training set score: {:.2f}".format(logreg.score(trainingset, traininglabels)))
-    print("Test set score: {:.2f}".format(logreg.score(testset, testlabels)))
 
 
 def testSVM():
@@ -31,7 +19,6 @@ def testSVM():
 
 
 if __name__ == '__main__':
-    # testSVM()
-    testLogistic()
+    testSVM()
     # testLasso()
     # testOLS()

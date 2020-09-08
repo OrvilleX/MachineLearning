@@ -82,7 +82,7 @@
 
 * [sigmoid算法](https://www.jianshu.com/p/506595ec4b58)  
 
-由于我们这里处理的是二分类问题，对于Logistic最终计算的结果值，我们需要将其限定在一个实当的范围内
+由于我们这里处理的是二分类问题，对于Logistic最终4计算的结果值，我们需要将其限定在一个实当的范围内
 从而实现分类，其实就是计算概率，如果概率大于一半进行选择。  
 
 * [梯度上升算法简单理解](https://www.jianshu.com/p/eb94c60015c7)  
@@ -93,8 +93,7 @@
 入一个更高效的算法，即随机梯度提升算法，可以仅用一个样本点更新回归系数。下面我们可以参考具体的实
 现代码进行学习：  
 
-* [Numpy原始算法](./linearModelWithRaw.py)  
-* [sklearn库使用](./linearModelWithMglearn.py)  
+* [Logistic回归算法](./LogisticRegression.py)  
 
 ### 支持向量机（SVM）  
 
