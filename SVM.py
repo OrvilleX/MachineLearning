@@ -151,6 +151,10 @@ def showSvm():
     plt.yscale("log")
     plt.show();
 
+"""
+gamma参数是用于控制高斯核的宽度，它决定了点与点之间“靠近”是指多大的距离
+C参数是正则化参数，它限制每个点的重要性
+"""
 
 def showSvmWithPre():
     """

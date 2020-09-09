@@ -114,11 +114,18 @@
 
 * [numpy原始算法与sklearn库使用](regression.py)  
 
+### 神经网络  
+
+这里我们以入门的MLP（多层感知机）为例，相关的代码可以参考：  
+
+* [基于sklearn的MLP使用](MLPWithMglearn.py)  
+
 ### 元计算  
 
 上面我们介绍了多个分类算法，为了得到最好的结果我们有时可能需要结合不同算法或相同算法不同配置进行组合，这就叫做元计算。本篇将主要介绍
 同算法不同配置的情况，主要采用的是[adaboost算法](https://blog.csdn.net/px_528/article/details/72963977) ，对应的源码参考如下：  
 
+* [numpy原始算法](adaboost.py)  
 
 ## 无监督学习  
 
