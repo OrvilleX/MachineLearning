@@ -55,7 +55,7 @@
 * [随机森林](./randomtreeWithMglearn.py)  
 
 树回归（预测）相关源码  
-* [Numpy原始算法](./regTreesWithRaw.py)  
+* [Numpy原始算法](regTrees.py)  
 
 以上已经实现的ID3与CART算法，至此还剩下C4.5算法，关于三种算法的具体原理介绍可以参考如下文章：  
 
@@ -104,8 +104,7 @@
 为了训练模型我们此时需要引入[SMO算法](https://www.jianshu.com/p/eef51f939ace) （序列最小优化算法）来解决二次规划问题，当然
 如果读者并不想过多接触具体的核心算法逻辑，可以参考具体的实现源码进行学习应用：  
 
-* [Numpy原始算法](./svmMLiA.py)  
-* [sklearn库使用](./svmWithMglearn.py)  
+* [支持向量机](./SVM.py)  
 
 ### 线性回归  
 
@@ -113,7 +112,7 @@
 针对常规的数据这是没有问题的，但是如果样本数据中的特征多余样本数据本身那么就存在问题了，此时我们就需要通过引入岭回归、lasso与前向
 逐步回归算法。  
 
-* [numpy原始算法与sklearn库使用](./regressionWithRaw.py)  
+* [numpy原始算法与sklearn库使用](regression.py)  
 
 ### 元计算  
 
