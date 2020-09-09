@@ -129,6 +129,14 @@
 
 ## 无监督学习  
 
+### K均衡聚类  
+
+
+
+### Apriori算法  
+
+
+### FP-growth算法  
 
 
 ## 其他算法与工具  
@@ -153,6 +161,8 @@
 2. [Z-score标准化方法](https://blog.csdn.net/Orange_Spotty_Cat/article/details/80312154)
 3. 非线性归一化
 4. L2范数归一化方法  
+
+对于如何使用sklearn可以参考本[示例代码](scaler.py)  
 
 ### 指标  
 
