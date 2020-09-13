@@ -140,8 +140,8 @@
 还有一种降维技术就是独立成分分析。ICA假设数据是从N个数据源生成的，这一点和因子分析有些类似。假设数据为多个数据源的混合观察结果，这些数
 据源之间在统计上是相互独立的，而在PCA中只假设数据是不相关的。同因子分析一样，如果数据源的数目少于观察数据的数目，则可以实现降维过程。  
 
-* [Numpy原始算法](PCAWithRaw.py)  
-* [Sklearn算法](PCA.py)  
+* [Numpy原始算法](preprocessing/PCAWithRaw.py)  
+* [Sklearn算法](preprocessing/PCA.py)  
 
 ### K均衡聚类  
 
@@ -174,7 +174,7 @@
 3. 非线性归一化
 4. L2范数归一化方法  
 
-对于如何使用sklearn可以参考本[示例代码](scaler.py)  
+对于如何使用sklearn可以参考本[示例代码](preprocessing/scaler.py)  
 
 ### 指标  
 
