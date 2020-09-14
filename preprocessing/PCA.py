@@ -4,6 +4,10 @@ from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 import mglearn
 
+"""
+PCA主成分分析
+"""
+
 def simplePCA():
     cancer = load_breast_cancer()
     scaler = StandardScaler()

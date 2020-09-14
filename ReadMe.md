@@ -143,6 +143,15 @@
 * [Numpy原始算法](preprocessing/PCAWithRaw.py)  
 * [Sklearn算法](preprocessing/PCA.py)  
 
+PCA本身也由于其算法的特点，并不能满足所有的场景。这里我们将学习另一个非负矩阵分解（NMF）算法，它主要用于提取有用的特征，它的工作原理
+类似于PCA，也可以用于降维。其特点在将数据分解成非负加权求和的这个过程，对由多个独立源相加创建而成的数据特别有用，比如多人说话的音轨或
+包含多种乐器的音乐，在这种情况下，NMF可以识别除组成合成数据的原始分量。如果读者希望了解更多关于NMF的知识，可以参考
+[本文章](https://zhuanlan.zhihu.com/p/27460660)  
+
+* [Sklearn算法](/preprocessing/NMF.py)  
+
+
+
 ### K均衡聚类  
 
 ### Apriori算法  
