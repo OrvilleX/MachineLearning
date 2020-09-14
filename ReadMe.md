@@ -212,3 +212,4 @@ PCA本身也由于其算法的特点，并不能满足所有的场景。这里�
 ### 依赖工具  
 
 1. [matplotlib可视化](https://www.matplotlib.org.cn/)  
+2. [训练模型持久化](https://github.com/joblib/joblib)  
