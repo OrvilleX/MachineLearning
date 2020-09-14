@@ -158,7 +158,7 @@ PCA本身也由于其算法的特点，并不能满足所有的场景。这里�
 
 * [Sklearn算法](/preprocessing/t-SNE.py)
 
-### K均衡聚类  
+### K均值聚类  
 
 ### Apriori算法  
 
