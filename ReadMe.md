@@ -160,6 +160,12 @@ PCA本身也由于其算法的特点，并不能满足所有的场景。这里�
 
 ### K均值聚类  
 
+k均值聚类是最简单也最常用的聚类算法之一。它试图找到代表数据特定区域的簇中心。算法交替执行如下两个步骤：将每个数据点分配给最近的簇中心，
+然后将每个簇中心设置为所分配的所有数据点的平均值。如果簇的分配不再发生变化，那么算法结束。以下将列举出对应实现的方式。  
+
+* [Numpy原始算法](/kMeansWithRaw.py)  
+* [Sklearn算法](/KMeanss.py)  
+
 ### Apriori算法  
 
 
@@ -213,3 +219,5 @@ PCA本身也由于其算法的特点，并不能满足所有的场景。这里�
 
 1. [matplotlib可视化](https://www.matplotlib.org.cn/)  
 2. [训练模型持久化](https://github.com/joblib/joblib)  
+3. [Sklearn中文文档](https://sklearn.apachecn.org/)  
+

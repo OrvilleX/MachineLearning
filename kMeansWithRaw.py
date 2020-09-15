@@ -26,6 +26,9 @@ def randCent(dataSet, k):
 
 
 def kMeans(dataSet, k, distMeas=distEclud, createCent=randCent):
+    """
+    普通K均值聚类
+    """
     m = shape(dataSet)[0]
     clusterAssment = mat(zeros((m,2)))
     centroids = createCent(dataSet, k)
@@ -51,6 +54,9 @@ def kMeans(dataSet, k, distMeas=distEclud, createCent=randCent):
 
 
 def biKmeans(dataSet, k, distMeas = distEclud):
+    """
+    二分K均值聚类
+    """
     m = shape(dataSet)[0]
     clusterAssment = mat(zeros((m,2)))
     centroid0 = mean(dataSet, axis=0).tolist()[0]
