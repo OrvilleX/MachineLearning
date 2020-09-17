@@ -31,6 +31,7 @@ def ariAndnmiTest(score):
         ax.set_title("{} - ARI: {:.2f}".format(algorithm.__class__.__name__, score(y, clusters)))
     plt.show()
 
+
 def silTest():
     """
     轮廓系数
