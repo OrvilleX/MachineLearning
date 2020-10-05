@@ -17,7 +17,7 @@ def treetest():
 
     print("Accuracy on training set: {:.3f}".format(tree.score(x_train, y_train)))
     print("Accuracy on test set: {:.3f}".format(tree.score(x_test, y_test)))
-
+    tree.predict()
     # 读取决策树并显示
     with open("../tree.dot") as f:
         dot_graph = f.read()
