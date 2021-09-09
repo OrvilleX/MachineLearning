@@ -1,10 +1,19 @@
 from numpy import *
 
 
-def file2matrix(filename: str, column = 3):
-    '''
+def file2matrix(filename: str, column=3):
+    """
     将文件内容转换为矩阵
-    '''
+        Parameters
+        ----------
+        filename : str
+            文件地址
+        column : int
+            列数
+        Returns
+        -------
+        out : (ndarray, ndarray)
+    """
     file = open(filename)
     arrayofLines = file.readlines()
     numberofLines = len(arrayofLines)
@@ -21,9 +30,16 @@ def file2matrix(filename: str, column = 3):
 
 
 def autoNorm(dataset: array):
-    '''
+    """
     归一化特征值
-    '''
+    Parameters
+        ----------
+        dataset : 需要特征化的数据
+
+        Returns
+        -------
+        out : (ndarray, ndarray, ndarray)
+    """
     minVals = dataset.min(0)
     maxVals = dataset.max(0)
     ranges = maxVals - minVals
@@ -34,10 +50,19 @@ def autoNorm(dataset: array):
     return normDataset, ranges, minVals
 
 
-def file2floatMatrix(filename: str, column = 3):
-    '''
+def file2floatMatrix(filename, column=3):
+    """
     读取文件内容并以浮点数值组织矩阵
-    '''
+        Parameters
+        ----------
+        filename : str
+            文件地址
+        column : int
+            列数
+        Returns
+        -------
+        out : (ndarray, ndarray)
+    """
     file = open(filename)
     trainingset = []
     traininglabels = []
