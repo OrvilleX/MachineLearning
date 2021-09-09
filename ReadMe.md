@@ -322,4 +322,6 @@ pd.get_dummies(demo_frame, columns=['Integer Feature', 'Categorical Feature'])
 1. [matplotlib可视化](https://www.matplotlib.org.cn/)  
 2. [训练模型持久化](https://github.com/joblib/joblib)  
 3. [Sklearn中文文档](https://sklearn.apachecn.org/)  
+4. [将模型持久化为PMML供Java应用运行](https://github.com/jpmml/sklearn2pmml)  
+5. [Java运行PMML模型算法](https://github.com/jpmml/jpmml-evaluator)  
 
