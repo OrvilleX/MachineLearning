@@ -2,7 +2,9 @@
 
 #### 注意以下文档链接可能需要访问外网，所以请保证网络的正常。  
 
-## 前言  
+## 项目情况  
+
+### 前言
 
 本教程纯属个人利用业务时间进行积累学习，同时考虑到大多数场景下以应用为主，所以直接采用Numpy
 进行相关成熟算法的编写并使用并不符合高效的开发原则，所以这里采用结合了Numpy算法以及sklearn
@@ -11,13 +13,20 @@
 由于本人的数学理论基础并不是特别扎实如果存在相关理论或者说法的错误欢迎各位大神进行指点并提交
 相关的PR从而使该教程更完善。  
 
-## 基础知识  
+### 项目结构  
+
+本项目将按照具体的类库、平台进行区分，当前主要包含如下目录。  
+
+* raw：基于numpy实现的原始算法
+* sklearn：基于scikit-learn库快速实现  
+* utils：项目额外补充的工具类  
+
+### 数据基础知识  
 
 * [正态分布含义](https://www.zhihu.com/question/56891433)  
 * [高斯分布](https://baijiahao.baidu.com/s?id=1621087027738177317&wfr=spider&for=pc)  
 * [泊松分布](https://www.matongxue.com/madocs/858)  
-* [伯努利分布](https://www.cnblogs.com/jmilkfan-fanguiju/p/10589773.html)   
-
+* [伯努利分布](https://www.cnblogs.com/jmilkfan-fanguiju/p/10589773.html)  
 
 ## 监督学习  
 
