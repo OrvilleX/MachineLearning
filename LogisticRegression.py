@@ -1,6 +1,6 @@
 from sklearn.linear_model import LogisticRegression
 from numpy import *
-import tool
+from utils import tool
 
 
 def sigmoid(intx: int):

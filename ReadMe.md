@@ -19,7 +19,12 @@
 
 * raw：基于numpy实现的原始算法
 * sklearn：基于scikit-learn库快速实现  
+* spark：基于Spark ML的机器学习实现  
 * utils：项目额外补充的工具类  
+
+### 其他分支教程  
+
+#### `对于Spark ML`的具体教程将在独立的[文档](./spark/ReadMe.md)中进行说明，不在本教程上下进行介绍。  
 
 ### 数据基础知识  
 

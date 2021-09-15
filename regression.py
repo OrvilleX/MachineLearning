@@ -1,6 +1,6 @@
 from numpy import *
 from sklearn.linear_model import Ridge, Lasso, LinearRegression
-import tool
+from utils import tool
 
 
 def lwlr(testPoint, xArr, yArr, k = 1.0):
