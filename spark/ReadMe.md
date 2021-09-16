@@ -329,3 +329,13 @@ idf.fit(tf.transform(tokenized)).transform(tf.transform(tokenized)).show()
 ```  
 
 输出显示总的词汇量、文档中出现的每个单词的哈希值，以及这些单词的权重。
+
+* Word2Vec
+
+因为机器学习只能接受数值形式，为此需要进行转换，而Word2Vec就是词嵌入的中的一种。而Spark内使用的是基于`skip-gram`模型，而该模型主要是根据输入的词语推算出上下文可能与该词组合的其他词语。如果希望学习Word2Vec则可以参考[本文档](https://zhuanlan.zhihu.com/p/26306795/)  
+
+```scala
+val word2Vec = new Word2Vec().setInputCol("DescOut").setOutputCol("result").setVectorSize(3).setMinCount(0)
+val model = word2Vec.fit(tokenized)
+model.transform(tokenized).show()
+```

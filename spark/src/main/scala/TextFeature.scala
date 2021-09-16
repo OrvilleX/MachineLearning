@@ -7,6 +7,7 @@ import org.apache.spark.ml.feature.NGram
 import org.apache.spark.ml.feature.CountVectorizer
 import org.apache.spark.ml.feature.HashingTF
 import org.apache.spark.ml.feature.IDF
+import org.apache.spark.ml.feature.Word2Vec
 
 /**
   * 文本数据特征处理
@@ -62,16 +63,21 @@ object TextFeature {
         // 另一种将本文转换为数值表示的方法是使用词频-逆文档频率（TF-IDF）。最简单的情况
         // 是，TF-IDF度量一个单词在每个文档中出现的频率，并根据该单词出现过的文档数进行
         // 加权，结果是在较少文档中出现的单词比在许多文档中出现的单词权重更大。
-        val tf = new HashingTF().setInputCol("DescOut")
-            .setOutputCol("TFOut")
-            .setNumFeatures(10000)
-        var idf = new IDF().setInputCol("TFOut")
-            .setOutputCol("IDFOut")
-            .setMinDocFreq(2)
-        idf.fit(tf.transform(tokenized)).transform(tf.transform(tokenized)).show()
+        // val tf = new HashingTF().setInputCol("DescOut")
+        //     .setOutputCol("TFOut")
+        //     .setNumFeatures(10000)
+        // var idf = new IDF().setInputCol("TFOut")
+        //     .setOutputCol("IDFOut")
+        //     .setMinDocFreq(2)
+        // idf.fit(tf.transform(tokenized)).transform(tf.transform(tokenized)).show()
 
         // 输出显示总的词汇量、文档中出现的每个单词的哈希值，以及这些单词的权重
 
-        
+        // 因为机器学习只能接受数值形式，为此需要进行转换，而Word2Vec就是词嵌入的中的一种。
+        // 而Spark内使用的是基于`skip-gram`模型，而该模型主要是根据输入的词语推算出上下文可能与该词组合的其他词语。
+        // 如果希望学习Word2Vec则可以参考[本文档](https://zhuanlan.zhihu.com/p/26306795/)
+        // val word2Vec = new Word2Vec().setInputCol("DescOut").setOutputCol("result").setVectorSize(3).setMinCount(0)
+        // val model = word2Vec.fit(tokenized)
+        // model.transform(tokenized).show()
     }
 }
