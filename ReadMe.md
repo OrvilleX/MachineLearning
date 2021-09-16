@@ -89,9 +89,9 @@
 * [Numpy原始算法](./bayesWithRaw.py)  
 * [sklearn库使用](./bayesWithMglearn.py)  
 
-### Logistic回归  
+### 逻辑回归（Logistic回归）  
 
-首先在了解具体的Logistic回归算法前我们需要先了解几个相关的基础知识算法以便于我们更好的去
+首先在了解具体的逻辑回归算法前我们需要先了解几个相关的基础知识算法以便于我们更好的去
 了解其源码的实现逻辑和最终应用场景的选择。  
 
 * [sigmoid算法](https://www.jianshu.com/p/506595ec4b58)  
