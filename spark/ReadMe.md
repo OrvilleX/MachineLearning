@@ -339,3 +339,44 @@ val word2Vec = new Word2Vec().setInputCol("DescOut").setOutputCol("result").setV
 val model = word2Vec.fit(tokenized)
 model.transform(tokenized).show()
 ```
+
+### 5. 特征操作  
+
+* PCA  
+
+主成分（PCA）是一种数据方法， 用于找到我们的数据中最重要的成分。PCA使用参数k指定要创建的输出特征的数量，这通常应该比输入向量的尺寸小的多。  
+
+```scala
+val pca = new PCA().setInputCol("features").setK(2)
+pca.fit(featureDF).transform(featureDF).show()
+```
+
+### 6. 多项式扩展
+
+* PolynomialExpansion
+
+多项式扩展基于所有输入列生成交互变量。对于一个二阶多项式，Spark把特征向量中的每个值乘以所有其他值，然后将结果存储成特征。  
+
+```scala
+val pe = new PolynomialExpansion().setInputCol("features").setDegree(2)
+pe.transform(featureDF).show()
+```
+
+`多项式扩展会增大特征空间，从而导致高计算成本和过拟合效果，所以请效性使用。`  
+
+### 7. 特征选择
+
+* ChiSqSelector
+
+ChiSqSelector利用统计测试来确定与我们试图预测的标签无关的特征，并删除不相关的特征。其提供了以下集中方法：  
+
+1. numTopFea tures：基于p-value排序
+2. percentile：采用输入特征的比例
+3. fpr：设置截断p-value
+
+```scala
+val chisq = new ChiSqSelector().setFeaturesCol("features")
+    .setLabelCol("labelInd")
+    .setNumTopFeatures(1)
+chisq.fit(featureDF).transform(featureDF).show()
+```
