@@ -185,12 +185,14 @@ val vi = new VectorIndexer().setInputCol("features").setOutputCol("indexFeatures
 vi.transform(vva).show()
 ```
 
+如果读者希望控制最大的分类数，则可以通过`setMaxCategories`继续控制。  
+
 ## 2. 连续特征  
 
 这部分我们主要使用分桶，缩放与归一化。其中分桶对应前面所属的分箱行为。以下仅仅介绍较为
 简单的分桶方式，如果读者需要学习更高级的方式可以学习如局部敏感哈希（LSH）等算法。  
 
-* 分桶（Bucketizer）  
+### 1) 分桶（Bucketizer）  
 
 最好理解的分桶方式，即我们认为的将数值的区间限定好，让对应的数据归纳到对应的桶内。对于
 无限大与无限小则可以使用`Double.PositiveInfinity`与`Double.NegativeInfinity`填充。
@@ -203,7 +205,7 @@ val bucketer = new Bucketizer().setSplits(bucketBorders).setInputCol("value1")
 bucketer.transform(df).show()
 ```
 
-* 分桶（QuantileDiscretizer）
+### 2) 分桶（QuantileDiscretizer）
 
 该方式不用用户进行预设，其可以根据百分比进行拆分，读者可以通过`setRelativeError`设置
 近似分位数计算的相对误差。  
@@ -214,7 +216,7 @@ var bucketerModel = bucketer.fit(df)
 bucketerModel.transform(df).show()
 ```
 
-* 归一化（StandardScaler）
+### 3) 归一化（StandardScaler）
 
 基于StandardScaler将一组特征值归一化成平均值为0而标准偏差为1的一组新值。通过withStd标志设置单位标准差，而withMean标识将使数据在缩放之前进行中心化。稀疏向量中心化非常耗时，因为一般会将它们转化为稠密向量。  
 
@@ -223,7 +225,7 @@ val sScaler = new StandardScaler().setInputCol("features")
 sScaler.fit(rdf).transform(rdf).show()
 ```
 
-* 缩放（MinMaxScaler）
+### 4) 缩放（MinMaxScaler）
 
 将向量中的值基于给定的最小值到最大值按比例缩放。如最小值为0且最大值为1，则所有值将介于0和1之间。  
 
@@ -232,7 +234,7 @@ val minMax = new MinMaxScaler().setMin(5).setMax(10).setInputCol("features")
 minMax.fit(rdf).transform(rdf).show()
 ```
 
-* 缩放（MaxAbsScaler）
+### 5) 缩放（MaxAbsScaler）
 
 基于MaxAbsScaler将每个值除以该特征的最大绝对值来缩放数据。计算后的值将在-1与1之间。  
 
@@ -241,7 +243,7 @@ val maScaler = new MaxAbsScaler().setInputCol("features")
 maScaler.fit(rdf).transform(rdf).show()
 ```
 
-* 缩放（ElementwiseProduct）
+### 6) 缩放（ElementwiseProduct）
 
 基于ElementwiseProduct将一个缩放向量对某向量中的每个值以不同的尺度进行缩放。  
 
@@ -252,7 +254,7 @@ val scalingUp = new ElementwiseProduct()
 scalingUp.transform(rdf).show()
 ```
 
-* 缩放（Normalizer）
+### 7) 缩放（Normalizer）
 
 用幂范数来缩放多维向量，Normalizer的作用范围是每一行。其通过参数P设置几范数，为1表示曼哈顿范数，2表示欧几里德范数等。  
 
@@ -261,12 +263,12 @@ val manhattanDistance = new Normalizer().setP(1).setInputCol("features")
 manhattanDistance.transform(rdf).show()
 ```
 
-### 3. 类型特征  
+## 3. 类型特征  
 
 针对数据的处理，往往会存在大量枚举指标。有可能是字符串，也有可能是数字等形式。针对字符
 串形式的类型数据，我们就需要将其进行转换，从而便于进行后续的数据分析处理。  
 
-* StringIndexer
+### 1) StringIndexer
 
 最简单的方式就是将对应的类型映射到对应ID形成关系。  
 
@@ -283,7 +285,7 @@ val labelReverse = new IndexToString().setInputCol("labelInd")
 labelReverse.transform(idxRes).show()
 ```
 
-* OneHotEncoder
+### 2) OneHotEncoder
 
 基于One-hot（独热编码）在类别变量索引之后进行转换。其目的主要是因为经过字符串索引后就存在了一种大小关系，比如对应颜色这种类别是无意义的所以我们需要将其转换为向量中的一个布尔值元素。  
 
@@ -292,13 +294,13 @@ val ohe = new OneHotEncoder().setInputCol("labelInd")
 ohe.transform(idxRes).show()
 ```
 
-### 4. 文本数据特征  
+## 4. 文本数据特征  
 
 在实际的预处理过程中我们往往会遇到需要将文档等由多种词语构成的数据进行分析。而针对这类
 文本数据的分析，我们需要借助以下几个流程将这类文本数据转换为具体的特征数据从而便于我们
 进行数据的分析处理。  
 
-* Tokenizer  
+### 1) Tokenizer  
 
 首先我们需要将一段话进行分词，分词是将任意格式的文本转变成一个“符号”列表或者一个单词列表的过程。  
 
@@ -308,7 +310,7 @@ val tokenized = tkn.transform(sales.select("Description"))
 tokenized.show()
 ```
 
-* RegexTokenizer  
+### 2) RegexTokenizer  
 
 不仅可以基于`Tokenizer`通过空格分词，也可以使用RegexTokenizer指定的正则表达式来分词。  
 
@@ -320,7 +322,7 @@ val rt = new RegexTokenizer().setInputCol("Description")
 rt.transform(sales.select("Description")).show()
 ```
 
-* StopWordsRemover  
+### 3) StopWordsRemover  
 
 分词后的一个常见任务是过滤停用词，这些常用词在许多分析中没有什么意义，因此应被删除。  
 
@@ -332,7 +334,7 @@ val stops = new StopWordsRemover().setStopWords(englishStopWords)
 stops.transform(tokenized).show()
 ```
 
-* NGram  
+### 4) NGram  
 
 字符串分词和过滤停用词之后，会得到可作为特征的一个词集合。  
 
@@ -341,7 +343,7 @@ val bigram = new NGram().setInputCol("DescOut").setN(2)
 bigram.transform(tokenized.select("DescOut")).show()
 ```
 
-* CountVectorizer  
+### 5) CountVectorizer  
 
 一旦有了词特征，就可以开始对单词和单词组合进行计数，以便在我们的模型中使用可以通过setMinTF来决定词库中是否包含某项，通过setVocabSize设置总的最大单词量。  
 
@@ -358,7 +360,7 @@ fittedCV.transform(tokenized).show()
 
 实际上它是一个稀疏向量，包含总的词汇量、词库中某单词的索引，以及该单词的计数。
 
-* TF-IDF  
+### 6) TF-IDF  
 
 另一种将本文转换为数值表示的方法是使用词频-逆文档频率（TF-IDF）。最简单的情况是，TF-IDF度量一个单词在每个文档中出现的频率，并根据该单词出现过的文档数进行加权，结果是在较少文档中出现的单词比在许多文档中出现的单词权重更大。如果读者希望能够更深入的单独了解该技术可以阅读[本文章](http://dblab.xmu.edu.cn/blog/1261-2/)  
 
@@ -374,7 +376,7 @@ idf.fit(tf.transform(tokenized)).transform(tf.transform(tokenized)).show()
 
 输出显示总的词汇量、文档中出现的每个单词的哈希值，以及这些单词的权重。
 
-* Word2Vec
+### 7) Word2Vec
 
 因为机器学习只能接受数值形式，为此需要进行转换，而Word2Vec就是词嵌入的中的一种。而Spark内使用的是基于`skip-gram`模型，而该模型主要是根据输入的词语推算出上下文可能与该词组合的其他词语。如果希望学习Word2Vec则可以参考[本文档](https://zhuanlan.zhihu.com/p/26306795/)  
 
@@ -384,9 +386,9 @@ val model = word2Vec.fit(tokenized)
 model.transform(tokenized).show()
 ```
 
-### 5. 特征操作  
+## 5. 特征操作  
 
-* PCA  
+### 1) PCA  
 
 主成分（PCA）是一种数据方法， 用于找到我们的数据中最重要的成分。PCA使用参数k指定要创建的输出特征的数量，这通常应该比输入向量的尺寸小的多。  
 
@@ -395,9 +397,9 @@ val pca = new PCA().setInputCol("features").setK(2)
 pca.fit(featureDF).transform(featureDF).show()
 ```
 
-### 6. 多项式扩展
+## 6. 多项式扩展
 
-* PolynomialExpansion
+### 1) PolynomialExpansion
 
 多项式扩展基于所有输入列生成交互变量。对于一个二阶多项式，Spark把特征向量中的每个值乘以所有其他值，然后将结果存储成特征。  
 
@@ -408,9 +410,9 @@ pe.transform(featureDF).show()
 
 `多项式扩展会增大特征空间，从而导致高计算成本和过拟合效果，所以请效性使用。`  
 
-### 7. 特征选择
+## 7. 特征选择
 
-* ChiSqSelector
+### 1) ChiSqSelector
 
 ChiSqSelector利用统计测试来确定与我们试图预测的标签无关的特征，并删除不相关的特征。其提供了以下集中方法：  
 
