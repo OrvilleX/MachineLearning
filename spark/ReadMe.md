@@ -208,7 +208,9 @@ bucketer.transform(df).show()
 ### 2) 分桶（QuantileDiscretizer）
 
 该方式不用用户进行预设，其可以根据百分比进行拆分，读者可以通过`setRelativeError`设置
-近似分位数计算的相对误差。  
+近似分位数计算的相对误差。通过设置handleInvalid选择保留还是删除数据集中的NaN值。如果
+选择保留NaN值，则将对其进行特殊处理并将其放入自己的存储桶中，如读者设定4个桶，则其会被
+放入一个特殊的桶[4]中。    
 
 ```scala
 val bucketer = new QuantileDiscretizer().setNumBuckets(5).setInputCol("value1").setOutputCol("val1category")
