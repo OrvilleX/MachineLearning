@@ -3,6 +3,7 @@ import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.ml.feature.SQLTransformer
 import org.apache.spark.ml.feature.VectorAssembler
+import org.apache.spark.ml.feature.VectorIndexer
 
 /**
   * 特征工程
@@ -41,7 +42,14 @@ object FeatureEngineering {
           * 将多个Boolean，Double或Vector类型的列做为输入组成一个大的向量
           */
         
-        // val va = new VectorAssembler().setInputCols(Array("value1", "value2"))
-        // va.transform(df).show()
+        val va = new VectorAssembler().setInputCols(Array("value1", "value2")).setOutputCol("features")
+        val vva = va.transform(df)
+
+        /**
+          * 基于VectorIndexer
+          * 将一个向量列中的特征进行索引，一般用于决策树。其对于离散特征的索引是基于0开始的，但是并不保证值每次对应的索引值一致，但是对于0必然是会映射到0
+          */
+        val vi = new VectorIndexer().setInputCol("features").setOutputCol("indexFeatures").fit(vva)
+        vi.transform(vva).show()
     }
 }

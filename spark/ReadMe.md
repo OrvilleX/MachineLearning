@@ -173,6 +173,18 @@ val va = new VectorAssembler().setInputCols(Array("value1", "value2"))
 va.transform(df).show()
 ```  
 
+### 4) VectorIndexer  
+
+将一个向量列中的特征进行索引，一般用于决策树。其对于离散特征的索引是基于0开始的，但是并不保证值每次对应的索引值一致，但是对于0必然是会映射到0。  
+
+```scala
+val va = new VectorAssembler().setInputCols(Array("value1", "value2")).setOutputCol("features")
+val vva = va.transform(df)
+
+val vi = new VectorIndexer().setInputCol("features").setOutputCol("indexFeatures").fit(vva)
+vi.transform(vva).show()
+```
+
 ## 2. 连续特征  
 
 这部分我们主要使用分桶，缩放与归一化。其中分桶对应前面所属的分箱行为。以下仅仅介绍较为
