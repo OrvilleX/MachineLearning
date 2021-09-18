@@ -20,7 +20,7 @@ object FeatureEngineering {
           */
 
         // val supervised = new RFormula()
-        //     .setFormula("lab ~ . + color:value1 + color:value2")
+        //     .setFormula("lab ~ value1 + value2")
         // supervised.fit(df).transform(df).show()
 
         /**

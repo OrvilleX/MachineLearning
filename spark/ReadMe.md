@@ -13,6 +13,8 @@ C --> D[模型]
 
 接下来我们将以一个简单的例子为基础整体介绍在Spark下进行机器学习的使用方式，便于读者大体熟悉完整的流程节点。当然在这其中对于部分不了解的情况下可以等在后续详细学习的过程中进行补充即可。
 
+> [点击此处查看代码示例](src/main/scala/MachineLearnWithSpark.scala)  
+
 ## 1. 特征工程  
 
 这部分相关知识可以参考本人编写的[人工智能专题]()的开源教程，其中对该部分进行详细的说明，下面我们将就框架提供的`RFormula`进行具体的实战操作（这里熟悉R语言的可能对此比较熟悉，本身就是借鉴了R语言，但是仅实现了其中的一个子集），对于我们需要进行特征化的数据首先我们需要定义对应的线性模型公式，具体如下。  
@@ -107,6 +109,8 @@ System.out.println(evaluator.evaluate(model.transform(data[1])));
 
 下面我们将介绍较通用的三种的针对数据进行处理的方式，其中一种上述的教程已经使用了，这里将仅做为介绍进行概述。
 
+> [点击此处查看代码示例](src/main/scala/FeatureEngineering.scala)  
+
 ### 1) RFormula  
 
 其主要参考了基于R语言的formula设计思路，当然其中仅仅支持有限有限的操作符。并且其中对于字符串的处理是采用独热编码（One-hot）的方式，具体的使用方式如下。  
@@ -142,7 +146,7 @@ supervised.fit(df).transform(df).show()
 | good | 13 | 2.1 | [13.0, 2.1] | 1 |
 | bad | 9 | 8.2 | [9.0, 8.2] | 0 |
 
-至此关于`RFormula`介绍到此为止。  
+上述我们可以看到针对字符串类型的标签采用了字符串索引的方式进行映射，至此关于`RFormula`介绍到此为止。  
 
 ### 2) SQLTransformer  
 
@@ -159,7 +163,7 @@ val basicTrans = new SQLTransformer()
 basicTrans.transform(df).show()
 ```  
 
-* VectorAssembler  
+### 3) VectorAssembler  
 
 如果需要将多个Boolean，Double或Vector类型做为输入合并为一个大的向量则可以使用该函数
 实现我们所需要的效果。  
@@ -407,4 +411,53 @@ val chisq = new ChiSqSelector().setFeaturesCol("features")
     .setLabelCol("labelInd")
     .setNumTopFeatures(1)
 chisq.fit(featureDF).transform(featureDF).show()
+```  
+
+# 三、 模型服务化  
+
+当我们训练好模型后，往往需要将模型导出，便于实际应用服务导入从而实现具体的功能实现。为此下述我们将列举多种
+常用的方式进行介绍。从而便于读者可以根据实际的场景便于选择具体的方式方法。  
+
+## 1. PMML  
+
+> [点击此处查看代码示例](src/main/scala/SparkWithPMML.scala)  
+
+下面我们将以Spark ML训练模型，并将模型导出为PMML供Java应用进行调用，为此我们需要使用以下几个类库。  
+
+* [jpmml-sparkml](https://github.com/jpmml/jpmml-sparkml)  
+* [jpmml-evaluator](https://github.com/jpmml/jpmml-evaluator)  
+
+首先我们需要将训练得到的模型持久化以便于实际服务的加载使用，由于苯本篇幅相关的模型由Spark ML训练而得，所
+以我们将在在训练结束后进行。需要注意的是仅支持`PipelineModel`类型持久化，如果是单一的模型如`LogisticRegression`则需要将其填入到具体的`Pipeline`对象中，以下为具体的持久化代码。  
+
+```scala
+val df = spark.read.json("data/simple-ml.json")
+val iris = df.schema
+var model = pipeline.fit(train)
+
+val pmml = new PMMLBuilder(iris, model).build()
+JAXBUtil.marshalPMML(pmml, new StreamResult(new File("data/model")))
 ```
+
+其中`PMMLBuilder`需要将数据模型的元数据，以及对应训练好的模型放入构造函数中，借助于`JAXBUtil`工具类将PMML持久化为具体的文件。完成上述的模型写入后，我们就可以在具体需使用的应用中引用依赖，然后基于下述的方式进行读取即可。  
+
+```scala
+var eval = new LoadingModelEvaluatorBuilder().load(new File("data/model")).build()
+eval.verify()
+
+var inputFields = eval.getInputFields()
+val arguments = new LinkedHashMap[FieldName, FieldValue]
+
+for (inputField <- inputFields) {
+    var fieldName = inputField.getFieldName()
+    var value = data.get(fieldName.getValue())
+    val inputValue = inputField.prepare(value)
+
+    arguments.put(fieldName, inputValue)
+}
+
+var result = eval.evaluate(arguments)
+var resultRecoard = EvaluatorUtil.decodeAll(result)
+```
+
+上述代码中我们需要通过其提供的`getInputFields`方法获取算法模型所需要的入参，根据入参的`name`匹配到实际业务场景中对应的数据，当然这里笔者实际数据名称与模型名称一致，所以直接采用`data.get(fieldName.getValue())`获取到对应的值，通过`inputField.prepare(value)`转换到要求的对象类型。最后将数据填入字典后通过`eval.evaluate(arguments)`即可使用对应算法模型进行模型调用。当然返回的结果也是字典类型，我们需要根据实际需要从中读取我们感兴趣的值即可。  

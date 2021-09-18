@@ -25,7 +25,9 @@ version := "1.0"
 // You can define other libraries as dependencies in your build like this:
 scalaVersion := "2.12.12"
 
-libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2"
+libraryDependencies+= "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2"
+libraryDependencies+="org.jpmml"%"jpmml-sparkml"%"1.5.13"
+libraryDependencies+="org.jpmml"%"pmml-evaluator"%"1.5.15"
 libraryDependencies+="org.apache.spark"%%"spark-core"%"2.4.0"%"provided"
 libraryDependencies+="org.apache.spark"%%"spark-sql"%"2.4.0"%"provided"
 libraryDependencies+="org.apache.spark"%%"spark-mllib"%"2.4.0"%"provided"
