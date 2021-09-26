@@ -429,7 +429,213 @@ val chisq = new ChiSqSelector().setFeaturesCol("features")
 chisq.fit(featureDF).transform(featureDF).show()
 ```  
 
-# 三、 模型服务化  
+# 三、 分类算法  
+
+## 1. 逻辑回归  
+
+逻辑回归是一种线性模型，为输入的每个特征赋以权重之后将他们组合在一起，从而获得该输入属于特定类的概率。  
+
+> 超参数  
+
+| 参数名 | 说明 |
+| ---- | --- |
+| family | 可以设置为`multinomial`（多分类）或`binary`（二分类）|
+| elasticNetParam | 从0到1的浮点值。该参数依照弹性网络正则化的方法将L1正则化和L2正则化混合（即两者的线性组合） |
+| fitIntercept | 此超参数决定是否适应截距 |  
+| regParam | 确定在目标函数中正则化项的权重，它的选择和数据集的噪声情况和数据维度有关 |
+| standardization | 可以为true或false，设置它用于决定在将输入数据传递到模型之前是否要对其标准化 |
+
+> 训练参数  
+
+| 参数名 | 说明 |
+| ---- | --- |
+| maxIter | 迭代次数 |
+| tol | 此值指定一个用于停止迭代的阈值 |
+| weightCol | 权重列的名称，用于赋予某些行更大的权重 |
+
+> 预测参数  
+
+| 参数名 | 说明 |
+| ---- | --- |
+| threshold | 此参数事预测时的概率阈值，你可以根据需要调整此参数以平衡误报和漏报 |  
+
+`对于多项式分类模型（多分类） lrModel.coefficientMatrix和lrModel.interceptVector可以用来得到系数和截距值`  
+
+```scala
+val lr = new LogisticRegression()
+val lrModel = lr.fit(bInput)
+
+println(lrModel.coefficients) // 输出 系数
+println(lrModel.intercept) // 输出 截距
+```  
+
+## 2. 决策树  
+
+决策树是一种更友好和易于理解的分类方法，因为它类似人类经常使用的简单决策模型。  
+
+> 超参数  
+
+| 参数名 | 说明 |
+| ---- | --- |
+| maxDepth | 指定最大深度 |
+| maxBins | 确定应基于连续特征创建多少个槽，更多的槽提供更细的粒度级别 |
+| impurity | 不纯度表示是否应该在某叶子结点拆分的度量（信息增益），此参数可以设置为entropy或者gini |
+| minInfoGain | 此参数确定可用于分割的最小信息增益 |
+| minInstancePerNode | 此参数确定需要在一个节点结束训练的实例最小数目 |  
+
+> 训练参数  
+
+| 参数名 | 说明 |  
+| ---- | --- |
+| checkpointInterval | 检查点是一种在训练过程中保存模型的方法，此方法可以保证当集群节点因某种原因奔溃时不影响整个训练过程 |  
+
+```scala
+val dt = new DecisionTreeClassifier()
+val dtModel = dt.fit(bInput)
+println(dtModel.explainParams())
+```  
+
+## 3. 随机森林与梯度提升  
+
+随机森林，我们只训练大量的树，然后平均他们的结果做出预测。利用梯度提升树，每棵树进行加权预测。  
+
+> 随机森林超参数  
+
+| 参数名 | 说明 |
+| ---- | --- |
+| numTrees | 用于训练的树总数 |
+| featureSubsetStrategy | 此参数确定拆分时应考虑多少特征 |
+
+> 梯度提升树超参数  
+
+| 参数名 | 说明 |
+| ---- | --- |
+| lossType | 损失函数，目前仅支持logistic loss损失 |
+| maxIter | 迭代次数 |
+| stepSize | 代表算法的学习速度 |
+
+```scala
+val rfClassifier = new RandomForestClassifier()
+println(rfClassifier.explainParams())
+val rfModel = rfClassifier.fit(bInput)
+
+val gbtClassifier = new GBTClassifier()
+println(gbtClassifier.explainParams())
+val gbtModel = gbtClassifier.fit(bInput)
+```  
+
+## 4. 朴素贝叶素  
+
+朴素贝叶素分类是基于贝叶斯定理的分类方法，通常用于文本或文档分类，所有的输入特征碧玺为非负数。  
+
+> 超参数
+
+| 参数名 | 说明 |
+| ---- | --- |
+| modelType | 可选bernoulli或multinomial |
+| weightCol | 允许对不同的数据点赋值不同的权重 |
+
+> 训练参数  
+
+| 参数名 | 说明 |
+| ---- | --- |
+| smoothing | 它指定使用加法平滑时的正则化量，改设置有助于平滑分两类数据 |  
+
+```scala
+val nb = new NaiveBayes()
+println(nb.explainParams())
+val nbModel = nb.fit(bInput)
+```
+
+对于二分类，我们使用`BinaryClassificationEvaluator`，它支持优化两个不同的指标`areaUnderRoc`和`areaUnderPR`
+对于多分类，需要使用`MulticlassClassificationEvaluator`，它支持优化`f1`,`weightedPrecision`,`weightedRecall`,`accuracy`
+
+# 四、 回归算法
+
+## 1. 线性回归  
+
+线性回归假定输入特征的线性组合（每个特征乘以权重的综合）将得到（有一定高斯误差的）输出结果，具体参数同分类中该算法。  
+
+```scala
+val lr = new LinearRegression().setMaxIter(10).setRegParam(0.3).setElasticNetParam(0.8)
+println(lr.explainParams())
+val lrModel = lr.fit(df)
+```  
+
+## 2. 广义线性回归  
+
+线性回归的广义形式使你可以更细粒度地控制使用各种回归模型  
+
+> 超参数  
+
+| 参数名 | 说明 |
+| ---- | --- |
+| family | 指定在模型中使用的误差分布，支持Poisson、binomial、gamma、Caussian和tweedie。 |
+| link | 链接函数的名称，指定线性预测器与分布函数平均值之间的关系，支持cloglog、probit、logit、reverse、sqrt、identity和log |
+| solver | 指定的优化算法。 |
+| variancePower | Tweedie分布方差函数中的幂。 |
+| linkPower | Tweedie分布的乘幂链接函数索引。 |  
+
+> 预测参数  
+
+| 参数名 | 说明 |
+| ---- | --- |
+| linkPredictionCol | 指定一个列名，为每个预测保存我们的链接函数。 |
+
+```scala
+val glr = new GeneralizedLinearRegression().setFamily("gaussian").setLink("identity").setMaxIter(10).setRegParam(0.3).setLinkPredictionCol("linkOut")
+println(glr.explainParams())
+val glrModel = glr.fit(df)
+```  
+
+## 3. 决策树  
+
+用于回归分析的决策树不是在每个叶子节点上输出离散的标签，而是一个连续的数值，但是可解释性和模型结构仍然适用。对应参数可以参考分类中该算法。  
+
+```scala
+val dtr = new DecisionTreeRegressor()
+println(dtr.explainParams())
+val dtrModel = dtr.fit(df)
+```  
+
+## 4. 随机森林和梯度提升树  
+
+随机森林和梯度提升树模型可应用于分类和回归，它们与决策树具有相同的基本概念，不是训练一棵树而是很多树来做回归分析。  
+
+```scala
+val rf = new RandomForestRegressor()
+println(rf.explainParams())
+val rfModel = rf.fit(df)
+
+val gbt = new GBTRegressor()
+println(gbt.explainParams())
+var gbtModel = gbt.fit(df)
+```  
+
+## 5. 评估器和自动化模型校正  
+
+用于回归任务的评估器称为 RegressionEvaluator，支持许多常见的回归度量标准。与分类评估器一样，RegressionEvaluator 需要两项输入，一个表示预测值，另一个表示真是标签的值。  
+
+```scala
+val glr = new GeneralizedLinearRegression()
+    .setFamily("gaussian")
+    .setLink("identity")
+
+val pipeline = new Pipeline().setStages(Array(glr))
+val params = new ParamGridBuilder().addGrid(glr.regParam, Array(0, 0.5, 1)).build()
+val evaluator = new RegressionEvaluator()
+    .setMetricName("rmse")
+    .setPredictionCol("prediction")
+    .setLabelCol("label")
+val cv = new CrossValidator()
+    .setEstimator(pipeline)
+    .setEvaluator(evaluator)
+    .setEstimatorParamMaps(params)
+    .setNumFolds(2)
+val model = cv.fit(df)
+```
+
+# 五、 模型服务化  
 
 当我们训练好模型后，往往需要将模型导出，便于实际应用服务导入从而实现具体的功能实现。为此下述我们将列举多种
 常用的方式进行介绍。从而便于读者可以根据实际的场景便于选择具体的方式方法。  
