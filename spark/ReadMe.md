@@ -635,7 +635,87 @@ val cv = new CrossValidator()
 val model = cv.fit(df)
 ```
 
-# 五、 模型服务化  
+# 五、 推荐系统  
+
+主要采用ALS（交替最小二乘法）为每个用户和物品建立k维的特征向量，从而可以通过用户和物品向量的点积来估算该用户
+对物品的评分值，所以只需要用户-物品对的评分数据作为输入数据集，其中有三列：用户Id列、物品Id列和评分列。评分
+可以是显式的，即我们想要直接预测的数值登记；或隐式的，在这种情况下，每个分数表示用户和物品之间的交互强度，它
+衡量用户对该物品的偏好程度。  
+
+> 超参数  
+
+| 参数名 | 说明 |
+| ---- | --- |
+| rank | rank确定了用户和物品特征向量的维度，这通常是通过实验来调整，一个重要权衡是过高的秩导致过拟合，而过低的秩导致不能做出最好的预测 |
+| alpha | 在基于隐式反馈的数据上进行训练时，alpha设置偏好的基线置信度，这个值越大则越认为用户和他没有评分的物品之间没有关联 |
+| regParam | 控制正则化参数来防止过拟合，需要测试不同的值来找到针对你的问题的最优的值 |
+| implicitPrefs | 此布尔值指定是在隐式数据还是显式数据上进行训练 |
+| nonnegative | 如果设置为true，则将非负约束置于最小二乘问题上，并且只返回非负特征向量，这可以提高某些应用程序的性能 |  
+
+> 训练参数  
+
+其中最终主要的就是数据块，通常的做法是每个数据块大概分配一百万到五百万各评分值，如果每个数据块的数据量少于这个数字，则太多的数据块可能会影响性能。  
+
+| 参数名 | 说明 |
+| ---- | --- |
+| numUserBlocks | 确定将用户数据拆分成多少各数据块 |
+| numItemBlocks | 确定将物品数据拆分为多少各数据块 |
+| maxIter | 训练的迭代次数 |
+| checkpointInterval | 设置检查点可以在训练过程中保存模型状态 |
+| seed | 指定随机种子帮助复现实验结果 |  
+
+> 预测参数  
+
+主要的参数为冷启动策略，该参数用来设置模型应为未出现过在训练集中的用户或物品推荐什么，可通过coldStartStrategy设置，可以选择drop和nan设置。  
+
+```scala
+val conf = new SparkConf().setAppName("ScalaSparkML").setMaster("local")
+val spark = SparkSession.builder().config(conf).getOrCreate()
+
+val ratings = spark.read.textFile("data/sample_movielens_ratings.txt")
+            .selectExpr("split(value, '::') as col")
+            .selectExpr("cast(col[0] as int) as userId",
+            "(col[1] as int) as movieId",
+            "(col[2] as float) as rating",
+            "(col[3] as long) as timestamp")
+val Array(training, test) = ratings.randomSplit(Array(0.8, 0.2))
+val als = new ALS().setMaxIter(5).setRegParam(0.01).setUserCol("userId").setItemCol("movieId").setRatingCol("rating")
+println(als.explainParams())
+
+val alsModel = als.fit(ratings)
+val predictions = alsModel.transform(test)
+```
+
+模型的recommendForAllUsers方法返回对应某个userId的DataFrame，包含推荐电影的数组，以及每个影片的评分。recommendForAllItems返回对应某个
+movieId的DataFrame以及最有可能给该影片打高分的前几个用户。  
+
+```scala
+alsModel.recommendForAllUsers(10)
+    .selectExpr("userId", "explode(recommendations)").show()
+alsModel.recommendForAllItems(10)
+    .selectExpr("movieId", "explode(recommendations)").show()
+```  
+
+针对训练的模型效果我们依然需要针对其进行评估，这里我们可以采用与回归算法中相同的评估器进行评估。  
+
+```scala
+val evaluator = new RegressionEvaluator()
+    .setMetricName("rmse")
+    .setLabelCol("rating")
+    .setPredictionCol("prediction")
+val rmse = evaluator.evaluate(predictions)
+println(s"Root-mean-square error = $rmse")
+```  
+
+对于度量指标我们通过回归度量指标与排名指标进行度量，首先是回归度量指标，我们可以简单的查看每个用户和项目的实际评级与预测值的接近程度。  
+
+```scala
+val regComparison = predictions.select("rating", "prediction")
+                    .rdd.map(x => (x.getFloat(0).toDouble, x.getFloat(1).toDouble))
+val metrics = new RegressionMetrics(regComparison)
+```
+
+# 六、 模型服务化  
 
 当我们训练好模型后，往往需要将模型导出，便于实际应用服务导入从而实现具体的功能实现。为此下述我们将列举多种
 常用的方式进行介绍。从而便于读者可以根据实际的场景便于选择具体的方式方法。  
@@ -683,3 +763,4 @@ var resultRecoard = EvaluatorUtil.decodeAll(result)
 ```
 
 上述代码中我们需要通过其提供的`getInputFields`方法获取算法模型所需要的入参，根据入参的`name`匹配到实际业务场景中对应的数据，当然这里笔者实际数据名称与模型名称一致，所以直接采用`data.get(fieldName.getValue())`获取到对应的值，通过`inputField.prepare(value)`转换到要求的对象类型。最后将数据填入字典后通过`eval.evaluate(arguments)`即可使用对应算法模型进行模型调用。当然返回的结果也是字典类型，我们需要根据实际需要从中读取我们感兴趣的值即可。  
+
