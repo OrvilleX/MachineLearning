@@ -19,7 +19,7 @@
 
 本项目将按照具体的类库、平台进行区分，当前主要包含如下目录。  
 
-* raw：基于numpy实现的原始算法
+* raw：基于numpy实现的原始算法  
 * sklearn：基于scikit-learn库快速实现  
 * spark：基于Spark ML的机器学习实现  
 * utils：项目额外补充的工具类  
