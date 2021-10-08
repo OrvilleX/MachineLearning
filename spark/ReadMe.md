@@ -903,3 +903,10 @@ var resultRecoard = EvaluatorUtil.decodeAll(result)
 
 上述代码中我们需要通过其提供的`getInputFields`方法获取算法模型所需要的入参，根据入参的`name`匹配到实际业务场景中对应的数据，当然这里笔者实际数据名称与模型名称一致，所以直接采用`data.get(fieldName.getValue())`获取到对应的值，通过`inputField.prepare(value)`转换到要求的对象类型。最后将数据填入字典后通过`eval.evaluate(arguments)`即可使用对应算法模型进行模型调用。当然返回的结果也是字典类型，我们需要根据实际需要从中读取我们感兴趣的值即可。  
 
+# 八、 图分析  
+
+首先默认情况下SBT是无法引用该类库的，所以我们需要在sbt的配置文件`c:\\users\\[用户名]\\.sbt\\repositories`文件中增加如下内容。  
+
+```
+spark-repo: https://repos.spark-packages.org/
+```
