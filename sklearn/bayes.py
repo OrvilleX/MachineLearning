@@ -1,6 +1,6 @@
 from numpy import *
 from sklearn.naive_bayes import MultinomialNB
-import bayesWithRaw as bayes
+from raw import bayes as bayes
 
 '''
 其他朴素贝叶斯还有
@@ -9,7 +9,6 @@ BernoulliNB 适用于属性代表是否关系
 MultinomialNB 适用于属性用于计数场景
 
 通过max_depth可以控制树的深度
-
 '''
 
 def mnbtest():

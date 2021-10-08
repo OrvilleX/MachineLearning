@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import mglearn
 
 
+# 凝聚聚类算法
 def simpleTest():
     x, y = make_blobs(random_state=1)
     agg = AgglomerativeClustering(n_clusters=3)

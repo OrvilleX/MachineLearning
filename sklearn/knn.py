@@ -2,7 +2,7 @@ from utils import tool
 from sklearn.neighbors import KNeighborsRegressor
 
 
-# 测试基于sklearn的KNN算法
+# 测试基于sklearn的KNN算法（K近邻算法）
 def knnWithSklearnTest():
     hoRatio = 0.1
     datingDataMat, datingLabels = tool.file2matrix('datingTestSet2.txt')

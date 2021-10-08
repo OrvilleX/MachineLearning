@@ -2,6 +2,7 @@ from sklearn.datasets import make_blobs
 from sklearn.cluster import KMeans
 import mglearn
 
+# k-means算法
 def simpleKMeans():
     x, y = make_blobs(random_state=1)
 

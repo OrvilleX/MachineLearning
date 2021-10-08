@@ -1,8 +1,8 @@
 from numpy import *
-from sklearn.linear_model import Ridge, Lasso, LinearRegression
 from utils import tool
 
 
+# 线性回归
 def lwlr(testPoint, xArr, yArr, k = 1.0):
     '''
     局部加权线性回归函数
@@ -47,26 +47,6 @@ def main():
     yhat = lwlr(trainingset[0], trainingset, traininglabels, k = 1.0)
     print(yhat)
     yhat = lwlr(trainingset[0], trainingset, traininglabels, k = 0.001)
-    print(yhat)
-
-    lr = LinearRegression()
-    lr.fit(trainingset, traininglabels)
-    yhat = lr.predict([trainingset[0]])
-    print(yhat)
-
-    ridge = Ridge(alpha=1)
-    ridge.fit(trainingset, traininglabels)
-    yhat = ridge.predict([trainingset[0]])
-    print(yhat)
-
-    ridge = Ridge(alpha=0.001)
-    ridge.fit(trainingset, traininglabels)
-    yhat = ridge.predict([trainingset[0]])
-    print(yhat)
-
-    lasso = Lasso(alpha=1, max_iter=1000)
-    lasso.fit(trainingset, traininglabels)
-    yhat = lasso.predict([trainingset[0]])
     print(yhat)
 
     trainingset, traininglabels = tool.file2floatMatrix('abalone.txt', 8)

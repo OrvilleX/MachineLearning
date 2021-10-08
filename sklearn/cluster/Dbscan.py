@@ -5,6 +5,7 @@ import mglearn
 from sklearn.preprocessing import StandardScaler
 
 
+# 密度聚类算法
 def simpleTest():
     x, y =  make_moons(n_samples=200, noise=0.05, random_state=0)
     scaler = StandardScaler()

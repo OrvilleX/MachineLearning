@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import mglearn
 
 
+# 聚类算法对比评估
 def ariAndnmiTest(score):
     """
     ARI与NMI

@@ -1,5 +1,6 @@
 from numpy import *
 
+# 朴素贝叶斯
 
 def loadData():
     '''

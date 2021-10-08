@@ -62,12 +62,12 @@
 往往会有多个选择，但是考虑计算机本身的特点以及效率等，往往会会采用二叉树。相关的算法可以通过如下文件
 进行学习：  
 
-* [Numpy原始算法](tree/treeWithRaw.py)  
-* [sklearn库使用](tree/treeWithMglearn.py)  
-* [随机森林](./randomtreeWithMglearn.py)  
+* [Numpy原始算法](raw/tree.py)  
+* [sklearn库使用](sklearn/tree.py)  
+* [随机森林](raw/treePlotter.py)  
 
 树回归（预测）相关源码  
-* [Numpy原始算法](regTrees.py)  
+* [Numpy原始算法](raw/regTrees.py)  
 
 以上已经实现的ID3与CART算法，至此还剩下C4.5算法，关于三种算法的具体原理介绍可以参考如下文章：  
 
@@ -84,8 +84,8 @@
 关于该算法的基本介绍见[本文](https://zhuanlan.zhihu.com/p/26262151) 下面我们将主要介绍
 其算法的实现：  
 
-* [Numpy原始算法](./bayesWithRaw.py)  
-* [sklearn库使用](./bayesWithMglearn.py)  
+* [Numpy原始算法](raw/bayes.py)  
+* [sklearn库使用](sklearn/bayes.py)  
 
 ### 逻辑回归（Logistic回归）  
 
@@ -105,7 +105,8 @@
 入一个更高效的算法，即随机梯度提升算法，可以仅用一个样本点更新回归系数。下面我们可以参考具体的实
 现代码进行学习：  
 
-* [Logistic回归算法](./LogisticRegression.py)  
+* [基于numpy的逻辑回归算法](sklearn/logisticRegression.py)  
+* [基于sklearn的逻辑回归算法](raw/logisticRegression.py)  
 
 ### 支持向量机（SVM）  
 
@@ -116,7 +117,7 @@
 为了训练模型我们此时需要引入[SMO算法](https://www.jianshu.com/p/eef51f939ace) （序列最小优化算法）来解决二次规划问题，当然
 如果读者并不想过多接触具体的核心算法逻辑，可以参考具体的实现源码进行学习应用：  
 
-* [支持向量机](./SVM.py)  
+* [支持向量机](sklearn/SVM.py)  
 
 ### 线性回归  
 
@@ -124,20 +125,21 @@
 针对常规的数据这是没有问题的，但是如果样本数据中的特征多余样本数据本身那么就存在问题了，此时我们就需要通过引入岭回归、lasso与前向
 逐步回归算法。  
 
-* [numpy原始算法与sklearn库使用](regression.py)  
+* [基于sklearn的线性回归](sklearn/lineRegression.py)  
+* [基于numpy的线性回归](raw/lineRegression.py)  
 
 ### 神经网络  
 
 这里我们以入门的MLP（多层感知机）为例，相关的代码可以参考：  
 
-* [基于sklearn的MLP使用](MLPWithMglearn.py)  
+* [基于sklearn的MLP使用](sklearn/MLP.py)  
 
 ### 元计算  
 
 上面我们介绍了多个分类算法，为了得到最好的结果我们有时可能需要结合不同算法或相同算法不同配置进行组合，这就叫做元计算。本篇将主要介绍
 同算法不同配置的情况，主要采用的是[adaboost算法](https://blog.csdn.net/px_528/article/details/72963977) ，对应的源码参考如下：  
 
-* [numpy原始算法](adaboost.py)  
+* [numpy原始算法](raw/adaboost.py)  
 
 ## 无监督学习  
 
@@ -186,13 +188,13 @@ U,Sigma,VT = linalg.svd(mat(data))
 k均值聚类是最简单也最常用的聚类算法之一。它试图找到代表数据特定区域的簇中心。算法交替执行如下两个步骤：将每个数据点分配给最近的簇中心，
 然后将每个簇中心设置为所分配的所有数据点的平均值。如果簇的分配不再发生变化，那么算法结束。以下将列举出对应实现的方式。  
 
-* [Numpy原始算法](/kMeansWithRaw.py)  
-* [Sklearn算法](/KMeanss.py)  
+* [Numpy原始算法](/raw/KMeans.py)  
+* [Sklearn算法](/sklearn/KMeanss.py)  
 
 ### 凝聚聚类  
 
 该算法指的是许多基于相同原则构建的聚类算法，这一原则是：算法首先声明每个点是自己的簇，然后合并两个最相似的簇，直到满足某种停止准则为止。
-其中sk库的停止准则是簇的个数，因此相似的簇被合并，知道仅剩下指定个数的簇。其中库实现了以下三种选择。  
+其中sk库的停止准则是簇的个数，因此相似的簇被合并，直到仅剩下指定个数的簇。其中库实现了以下三种选择。  
 
 * ward：默认选项。ward挑选两个簇来合并，使得所有簇中的方差增加最小。这通常会得到大小差不多相等的簇。  
 * average：该链接将簇中所有点之间平均距离最小的两个簇合并。  
@@ -200,7 +202,7 @@ k均值聚类是最简单也最常用的聚类算法之一。它试图找到代�
 
 ward适用于大多数数据集，如果簇中的成员个数非常不同，那么average或complete可能效果更好。以下为具体的算法代码：  
 
-* [Sklearn算法](/cluster/agglomerative.py)  
+* [Sklearn算法](/sklearn/cluster/agglomerative.py)  
 
 ### 密度聚类
 
@@ -212,7 +214,7 @@ ward适用于大多数数据集，如果簇中的成员个数非常不同，那�
 核心样本，并被分配一个新的簇标签。然后访问该点的所有邻居，如果它们没有被分配一个簇，那么就分配刚刚创建的新的簇标签。如果它们是核心样本，
 那么就以此访问其邻居，以此类推。  
 
-* [Sklearn算法](/cluster/Dbscan.py)  
+* [Sklearn算法](/sklearn/cluster/Dbscan.py)  
 
 ### 聚类算法对比评估  
 
@@ -222,7 +224,7 @@ ward适用于大多数数据集，如果簇中的成员个数非常不同，那�
 以上两种评估方式存在一个很大的问题就是需要真实值来比较结果。但是实际情况可能并没有真实值进行评估，此时我们就需要利用轮廓系数。但它们
 在实践中的效果并不好。轮廓分数计算一个簇的紧致度，其值越大越好，最高分数为1。  
 
-* [Sklearn算法](/cluster/assessment.py)  
+* [Sklearn算法](/sklearn/cluster/assessment.py)  
 
 ### 挖掘频繁项集  
 

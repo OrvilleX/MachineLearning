@@ -40,12 +40,12 @@ object  UnsupervisedLearning {
           *     maxIter：迭代次数
           *     tol：该阈值指定质心改变到该程度后优化结束
           */
-        // val km = new KMeans().setK(3)
-        // println(km.explainParams())
-        // val kmModel = km.fit(sales)
+        val km = new KMeans().setK(3)
+        println(km.explainParams())
+        val kmModel = km.fit(sales)
 
-        // val summary = kmModel.summary
-        // summary.clusterSizes // 中心点数量
+        val summary = kmModel.summary
+        summary.clusterSizes // 中心点数量
 
         // 计算数据点与每个聚类中心点的距离，可以采用ClusterEvaluator评估器
 
