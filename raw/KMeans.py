@@ -84,7 +84,7 @@ def biKmeans(dataSet, k, distMeas = distEclud):
 
 
 if __name__ == '__main__':
-    dataMat = mat(loadDataSet("../kmeanstestSet2.txt"))
+    dataMat = mat(loadDataSet("../data/kmeanstestSet2.txt"))
     centList, assments = biKmeans(dataMat, 3)
     print(centList)
     #dataMat = mat(loadDataSet("kmeanstestSet.txt"))

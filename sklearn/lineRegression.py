@@ -4,7 +4,7 @@ from utils import tool
 
 # 线性回归
 def main():
-    trainingset, traininglabels = tool.file2floatMatrix('../ex0.txt', 2)
+    trainingset, traininglabels = tool.file2floatMatrix('../data/ex0.txt', 2)
 
     lr = LinearRegression()
     lr.fit(trainingset, traininglabels)

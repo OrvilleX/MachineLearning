@@ -11,8 +11,8 @@ def testLinear():
     基于sklearn的线性支持向量机
     """
     svc = LinearSVC(C=50)
-    trainingset, traininglabels = tool.file2floatMatrix('../horseColicTraining.txt', 21)
-    testset, testlabels = tool.file2floatMatrix('../horseColicTest.txt', 21)
+    trainingset, traininglabels = tool.file2floatMatrix('../data/horseColicTraining.txt', 21)
+    testset, testlabels = tool.file2floatMatrix('../data/horseColicTest.txt', 21)
     svc.fit(trainingset, traininglabels)
     print("svc.coef_: {}".format(svc.coef_))
     print("svc.intercept_: {}".format(svc.intercept_))

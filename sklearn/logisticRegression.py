@@ -8,8 +8,8 @@ def testLogistic():
     基于sklearn的Logistic回归
     """
     logreg = LogisticRegression(C=1)
-    trainingset, traininglabels = tool.file2floatMatrix('../horseColicTraining.txt', 21)
-    testset, testlabels = tool.file2floatMatrix('../horseColicTest.txt', 21)
+    trainingset, traininglabels = tool.file2floatMatrix('../data/horseColicTraining.txt', 21)
+    testset, testlabels = tool.file2floatMatrix('../data/horseColicTest.txt', 21)
     logreg.fit(trainingset, traininglabels)
     print("logreg.coef_: {}".format(logreg.coef_))
     print("logreg.intercept_: {}".format(logreg.intercept_))

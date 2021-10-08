@@ -62,8 +62,8 @@ def classifyvector(inx, weights):
 
 
 def colictest():
-    trainingset, traininglabels = tool.file2floatMatrix('../horseColicTraining.txt', 21)
-    testset, testlabels = tool.file2floatMatrix('../horseColicTest.txt', 21)
+    trainingset, traininglabels = tool.file2floatMatrix('../data/horseColicTraining.txt', 21)
+    testset, testlabels = tool.file2floatMatrix('../data/horseColicTest.txt', 21)
     trainweights = stocgradascent(trainingset, traininglabels, 500)
     errorcount = 0
     numtestvec = 0.0

@@ -24,6 +24,6 @@ def pca(dataMat, topNfeat=9999):
 
 
 if __name__ == '__main__':
-    dataMat = loadDataSet('../kmeanstestSet.txt')
+    dataMat = loadDataSet('../data/kmeanstestSet.txt')
     lowDMat, reconMat = pca(dataMat, 1)
     print(lowDMat)

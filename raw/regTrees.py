@@ -154,8 +154,8 @@ def testRaw():
     """
     测试树回归
     """
-    trainMat = mat(loadDataSet('../bikeSpeedVsIq_train.txt'))
-    testMat = mat(loadDataSet('../bikeSpeedVsIq_test.txt'))
+    trainMat = mat(loadDataSet('../data/bikeSpeedVsIq_train.txt'))
+    testMat = mat(loadDataSet('../data/bikeSpeedVsIq_test.txt'))
     myTree = createTree(trainMat, ops=(1, 20))
     yHat = createForeCast(myTree, testMat[:,0])
     corrcoef(yHat, testMat[:,1], rowvar=0)[0,1]
