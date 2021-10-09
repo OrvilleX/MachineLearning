@@ -439,7 +439,7 @@ chisq.fit(featureDF).transform(featureDF).show()
 
 | 参数名 | 说明 |
 | ---- | --- |
-| family | 可以设置为`multinomial`（多分类）或`binary`（二分类）|
+| family | 可以设置为`multinomial`（多分类）或`binomial`（二分类）|
 | elasticNetParam | 从0到1的浮点值。该参数依照弹性网络正则化的方法将L1正则化和L2正则化混合（即两者的线性组合） |
 | fitIntercept | 此超参数决定是否适应截距 |  
 | regParam | 确定在目标函数中正则化项的权重，它的选择和数据集的噪声情况和数据维度有关 |
@@ -463,10 +463,8 @@ chisq.fit(featureDF).transform(featureDF).show()
 
 ```scala
 val lr = new LogisticRegression()
-val lrModel = lr.fit(bInput)
-
-println(lrModel.coefficients) // 输出 系数
-println(lrModel.intercept) // 输出 截距
+val lrModel = lr.fit(train)
+lrModel.transform(test).show()
 ```  
 
 ## 2. 决策树  
@@ -492,7 +490,7 @@ println(lrModel.intercept) // 输出 截距
 ```scala
 val dt = new DecisionTreeClassifier()
 val dtModel = dt.fit(bInput)
-println(dtModel.explainParams())
+dtModel.transform(test).show()
 ```  
 
 ## 3. 随机森林与梯度提升  
@@ -516,12 +514,12 @@ println(dtModel.explainParams())
 
 ```scala
 val rfClassifier = new RandomForestClassifier()
-println(rfClassifier.explainParams())
-val rfModel = rfClassifier.fit(bInput)
+val rfModel = rfClassifier.fit(train)
+rfModel.transform(test).show()
 
 val gbtClassifier = new GBTClassifier()
-println(gbtClassifier.explainParams())
-val gbtModel = gbtClassifier.fit(bInput)
+val gbtModel = gbtClassifier.fit(train)
+gbtModel.transform(test).show()
 ```  
 
 ## 4. 朴素贝叶素  
@@ -544,11 +542,31 @@ val gbtModel = gbtClassifier.fit(bInput)
 ```scala
 val nb = new NaiveBayes()
 println(nb.explainParams())
-val nbModel = nb.fit(bInput)
+val nbModel = nb.fit(train)
+nbModel.transform(test).show()
 ```
 
 对于二分类，我们使用`BinaryClassificationEvaluator`，它支持优化两个不同的指标`areaUnderRoc`和`areaUnderPR`
 对于多分类，需要使用`MulticlassClassificationEvaluator`，它支持优化`f1`,`weightedPrecision`,`weightedRecall`,`accuracy`
+
+## 5. 线性支持向量机（待完善）  
+
+```scala
+val lsvc = new LinearSVC()
+val lsvcModel = lsvc.fit(train).setFeaturesCol("features")
+lsvcModel.transform(test).show()
+```  
+
+## 6. 多层感知分类器（待完善）  
+
+```scala
+// 网络层数，即3个特征点，2个节点数分别为7与6的两隐藏层，输出层2个节点（即二分类）
+val layers = Array[Int](3, 7, 6, 2)
+val mlp = new MultilayerPerceptronClassifier().setFeaturesCol("features")
+        .setLayers(layers).setMaxIter(100)
+val mlpModel = mlp.fit(train)
+mlpModel.transform(test).show()
+```
 
 # 四、 回归算法
 
