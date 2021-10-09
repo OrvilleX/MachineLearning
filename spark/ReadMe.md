@@ -187,6 +187,40 @@ vi.transform(vva).show()
 
 如果读者希望控制最大的分类数，则可以通过`setMaxCategories`继续控制。  
 
+### 5) Binarizer  
+
+二值化是将数值特征阀值化为二进制（0/1）特征的过程，其将根据`threshold`阈值参数，大于该阈值的数据将二值化为1，小于则二值化为0。
+
+```scala
+val bin = new Binarizer().setInputCol("value2")
+      .setOutputCol("bin").setThreshold(15)
+bin.transform(df).select("value2", "bin").show(10)
+```  
+
+### 6) BucketedRandomProjectionLSH
+
+欧几里德距离度量-局部敏感哈希的算法输入是密集的(dense)或稀疏的(sparse)矢量，每个矢量表示欧几里德距离空间中的一个点，输出将是可配置维度的向量。  
+
+```scala
+val va = new VectorAssembler().setInputCols(Array("value1", "value2")).setOutputCol("features")
+val vva = va.transform(df)
+val brp = new BucketedRandomProjectionLSH()
+        .setInputCol("features").setOutputCol("lsh").setBucketLength(100)
+        .setNumHashTables(10).setNumHashTables(5).fit(vva)
+brp.transform(vva).select("features", "lsh").show()
+```
+
+### 7) Imputer  
+
+归因估算器使用缺失值所在列的平均值或中位数来完成数据集中的缺失值，输入列应为DoubleType或FloatType。  
+
+```scala
+val imputer = new Imputer().setInputCols(Array("value2"))
+        .setOutputCols(Array("value2_imp")).setMissingValue(0)
+        .fit(df)
+imputer.transform(df).select("value2", "value2_imp").show()
+```
+
 ## 2. 连续特征  
 
 这部分我们主要使用分桶，缩放与归一化。其中分桶对应前面所属的分箱行为。以下仅仅介绍较为
