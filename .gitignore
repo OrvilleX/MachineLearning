@@ -19,6 +19,7 @@ dependency-reduced-pom.xml
 # Eclipse Project Files
 
 project
+checkpoint
 .bloop
 .classpath
 .project
