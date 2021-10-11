@@ -42,9 +42,9 @@ object ContinuousFeature {
         /**
           * 缩放与归一化
           */
-        val va = new VectorAssembler().setInputCols(Array("value1", "value2"))
-          .setOutputCol("features")
-        val rdf = va.transform(df)
+        // val va = new VectorAssembler().setInputCols(Array("value1", "value2"))
+        //   .setOutputCol("features")
+        // val rdf = va.transform(df)
 
         // 基于StandardScaler将一组特征值归一化成平均值为0而标准偏差为1的一组新值。
         // 通过withStd标志设置单位标准差，而withMean标识将使数据在缩放之前进行中心化。
