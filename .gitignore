@@ -18,6 +18,7 @@ dependency-reduced-pom.xml
 
 # Eclipse Project Files
 
+yolo
 project
 checkpoint
 .bloop
