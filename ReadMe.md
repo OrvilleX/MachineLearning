@@ -19,15 +19,26 @@
 
 本项目将按照具体的类库、平台进行区分，当前主要包含如下目录。  
 
+* cnn: 卷积神经网络相关算法  
+* featureengineering: 特征工程相关  
+* frequentltemsets: 频繁项集挖掘相关算法  
 * raw：基于numpy实现的原始算法  
 * sklearn：基于scikit-learn库快速实现  
 * spark：基于Spark ML的机器学习实现  
+* scipy: 基于SciPy的科学计算使用，[具体说明](./scipy/ReadMe.md)    
 * utils：项目额外补充的工具类  
 
 ### 数据基础知识  
 
+#### 正态分布
+
 * [正态分布含义](https://www.zhihu.com/question/56891433)  
 * [高斯分布](https://baijiahao.baidu.com/s?id=1621087027738177317&wfr=spider&for=pc)  
+
+可使用`numpy.random中的randn、standard_normal和normal`返回随机正态分布的数组，其
+中`normal`是[普遍使用](./normal/numpyTest.py)的方法。  
+
+
 * [泊松分布](https://www.matongxue.com/madocs/858)  
 * [伯努利分布](https://www.cnblogs.com/jmilkfan-fanguiju/p/10589773.html)  
 
@@ -233,7 +244,7 @@ ward适用于大多数数据集，如果簇中的成员个数非常不同，那�
 从众多的数据组合中挖掘我们感兴趣的频繁项集出来从而便于我们更好的分析数据其中的奥秘，下面我们将介绍常用的Apriori算法和FP-growth算法。  
 
 首先介绍的Apriori算法是发现频繁项集的一种方法。该算法的三个输入参数分别是数据集、最小支持度和最小置信度。该算法首先会生成所有单个物品
-的项集列表。接着扫描记录来查看哪些项集满足最小支持度要求，哪些不满足最小支持度的集合会被去掉。然后，对生下来的集合进行组合以生成包含两个
+的项集列表。接着扫描记录来查看哪些项集满足最小支持度要求，那些不满足最小支持度的集合会被去掉。然后，对剩下来的集合进行组合以生成包含两个
 元素的项集。接下来，再重新扫描记录，去掉不满足最小支持度的项集。该过程重复进行直到所有项集都被去掉。由于sklearn并没有包含该类算法，所以
 读者需要额外安装其他库`pip install efficient-apriori`进行安装，然后可以按照如下算法进行编写：  
 
@@ -242,7 +253,7 @@ ward适用于大多数数据集，如果簇中的成员个数非常不同，那�
 
 Apriori算法对于每个潜在的频繁项集都会扫描数据集判定给定模式是否频繁，这在小数据量的情况下并不会存在问题，但是当我们需要面对更大数据集的
 时候，这个问题将会被放大。由此我们就需要一个更高效的算法，即FP-growth算法，该算法能够高效地的发现频繁项集，但是却不能用于发现关联规则。
-FP-growth知需要对数据库进行两次扫描即可，所以整体提升的效率非常可观。由于sklearn本身没有提供该算法API，所以读者需要安装额外的库进行
+FP-growth只需要对数据库进行两次扫描即可，所以整体提升的效率非常可观。由于sklearn本身没有提供该算法API，所以读者需要安装额外的库进行
 支持，如`pip install pyfpgrowth`。  
 
 * [Numpy原始算法](/frequentItemsets/fpgrowthWithRaw.py)  
@@ -256,7 +267,7 @@ FP-growth知需要对数据库进行两次扫描即可，所以整体提升的�
 ### 分类变量  
 
 前面的例子我们一直假设数据是由浮点数组成的二维数组，其中每一列是描述数据点的连续特征（conmtiinuous feature）。对于许多应用而言，数据
-的手机方式并不是这样。一种特别常见的特征类型就是分类特征（categorical feature），也叫离散特征（disccrete feature）。为了表示这种
+的搜集方式并不是这样。一种特别常见的特征类型就是分类特征（categorical feature），也叫离散特征（disccrete feature）。为了表示这种
 类型数据，我们最常用的方法就是one-hot编码（one-hot-encoding）或N取一编码（one-out-of-N encoding），也叫虚拟变量（dummy vari
 able）。  
 
