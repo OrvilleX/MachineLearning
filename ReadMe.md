@@ -30,6 +30,8 @@
 
 ### 数据基础知识  
 
+* [统计计算基础知识](https://www.math.pku.edu.cn/teachers/lidf/docs/statcomp/html/_statcompbook/index.html)
+
 #### 正态分布
 
 * [正态分布含义](https://www.zhihu.com/question/56891433)  
