@@ -42,6 +42,7 @@ pip install -r requirements.txt
 
 ### 2.1 目标检测相关 (cnn)  
 
+* [相关基本术语介绍](./docs/cnn/Basic.md)  
 * [介绍关于各类NMS相关的概念以及对应的实现方式](./docs/cnn/NMS.md)  
 * 
 
