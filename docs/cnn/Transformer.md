@@ -3,6 +3,7 @@
 ## 框架整体解读
 
 * [Transformer在目标检测领域的开山之作DETR模型](https://mp.weixin.qq.com/s?__biz=MzIwMTE1NjQxMQ==&mid=2247585078&idx=1&sn=acf1b094e7b32fb82807e32267154445&chksm=96f1ff62a1867674b49f3b9040444e92a09b986b40ee2d72030ec21c773e6f6f39f585f08343&scene=27)  
+* [通往数据高效的Transformer目标检测器](https://www.cvmart.net/community/detail/6615)  
 * 
 
 ## Positional Encoding位置编码
