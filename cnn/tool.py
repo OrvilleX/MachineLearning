@@ -2,7 +2,7 @@ import sys
 from typing import Dict, List, Any;
 import numpy as np
 
-from cnn import Evaluator
+from cnn.evaluator import Evaluator
 
 
 def model_ap(det_boxes: Dict[str, List[Any]], gt_boxes: Dict[str, List[Any]], num_pos: Dict[str, int],

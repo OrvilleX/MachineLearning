@@ -3,7 +3,7 @@ import numpy as np
 
 
 class Evaluator:
-    def GetPascalVOCMetrics(self,
+    def getPascalVOCMetrics(self,
                             cfg,
                             classes,
                             gt_boxes,
@@ -49,7 +49,7 @@ class Evaluator:
             rec = acc_TP / npos
             prec = np.divide(acc_TP, (acc_FP + acc_TP))
             print(' ')
-            [ap, mpre, mrec, ii] = Evaluator.CalculateAveragePrecision(rec, prec)
+            [ap, mpre, mrec, ii] = Evaluator.calculateAveragePrecision(rec, prec)
             r = {
                 'class': c,
                 'precision': prec,
@@ -65,7 +65,7 @@ class Evaluator:
         return ret, classes
 
     @staticmethod
-    def CalculateAveragePrecision(rec, prec):
+    def calculateAveragePrecision(rec, prec):
         mrec = []
         mrec.append(0)
         [mrec.append(e) for e in rec]

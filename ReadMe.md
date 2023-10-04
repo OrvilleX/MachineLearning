@@ -4,7 +4,7 @@
 
 > 对于`Spark ML`的具体教程将在[独立的文档](./spark/ReadMe.md)中进行说明，不在本教程上下进行介绍。  
 
-## 项目情况  
+## 一、项目情况  
 
 ### 前言
 
@@ -14,6 +14,16 @@
 
 由于本人的数学理论基础并不是特别扎实如果存在相关理论或者说法的错误欢迎各位大神进行指点并提交
 相关的PR从而使该教程更完善。  
+
+### 安装方式
+
+为了能够顺利的运行使用本项目的各类代码并能够进行开发测试验证，需要首先在设置好对应的虚拟环境后
+通过以下指令安装所需要的各类依赖库。  
+
+```bash
+pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
+pip install -r requirements.txt
+```
 
 ### 项目结构  
 
@@ -27,6 +37,13 @@
 * spark：基于Spark ML的机器学习实现  
 * scipy: 基于SciPy的科学计算使用，[具体说明](./scipy/ReadMe.md)    
 * utils：项目额外补充的工具类  
+
+## 二、文档目录
+
+### 2.1 目标检测相关 (cnn)  
+
+* [介绍关于各类NMS相关的概念以及对应的实现方式](./docs/cnn/NMS.md)  
+* 
 
 ### 数据基础知识  
 

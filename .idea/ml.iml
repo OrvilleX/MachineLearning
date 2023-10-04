@@ -2,7 +2,10 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Python 3.9 (base)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="ml" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+  <component name="PackageRequirementsSettings">
+    <option name="versionSpecifier" value="大于或等于 (&gt;=x.y.z)" />
   </component>
 </module>
