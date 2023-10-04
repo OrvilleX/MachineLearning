@@ -84,6 +84,7 @@ stage模型在16年才提出来，之后才开始大火）soft-NMS也是一种�
 
 W-NMS认为Traditional NMS每次迭代所选出的最大得分框未必是精确定位的，冗余框也有可能是定位良好的。因此，W-NMS通过分类置信度与IOU来对
 同类物体所有的边框坐标进行加权平均，并归一化。其中，加权平均的对象包括M自身以及IoU≥NMS阈值的相邻框。
+相关的论文可以[参考此](https://openaccess.thecvf.com/content_ICCV_2017_workshops/papers/w14/Zhou_CAD_Scale_Invariant_ICCV_2017_paper.pdf)
 
 ### 局限性
 
@@ -161,8 +162,27 @@ Adaptive NMS应用了动态抑制策略，通过设计计了一个Density-subnet
 
 ANMS目前可通过参考[本文档](https://github.com/BAILOOL/ANMS-Codes)对应的python实现部分。  
 
+## 7. Weighted boxes fusion（加权框融合）
+
+### 概述
+
+目标检测模型常采用NMS和Soft-NMS，这种方式对于单个模型的预测结果有效，但本质上都是从模型的预测框中筛选最终的结果，过滤掉其他重合框。 
+如果多个模型做集成学习，NMS和Soft-NMS是通过删除部分预测框得到预测结果，不能充分利用所有的框的信息，而WBF利用所有检测框的置信度来
+构造最终的预测框，可以获得更准确的预测结果。  
+
+相关的论文可以参考[此文档](https://arxiv.org/abs/1910.13302)
+
+### 使用方式
+
+其本身与W-NMS类似，直接可以使用安装库进行使用，也可以通过本项目中的[代码](/cnn/nms/wbf.py)来进行学习了解。  
+
+```bash
+pip install ensemble-boxes
+```
+
 # 参考文档
 1. [详解目标检测NMS算法发展历程](https://zhuanlan.zhihu.com/p/623726684)  
 2. [ZFTurbo的参考源码](https://github.com/ZFTurbo/Weighted-Boxes-Fusion)  
 3. [KL-Loss](https://github.com/yihui-he/KL-Loss)  
-4. [ANMS-Codes](https://github.com/BAILOOL/ANMS-Codes)
+4. [ANMS-Codes](https://github.com/BAILOOL/ANMS-Codes)  
+5. [加权框融合WBF介绍](https://blog.csdn.net/Yemiekai/article/details/117839686)  
