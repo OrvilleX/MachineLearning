@@ -46,6 +46,7 @@ pip install -r requirements.txt
 * [介绍关于各类NMS相关的概念以及对应的实现方式](./docs/cnn/NMS.md)  
 * [关于Yolo模型中输入图片尺寸的影响分析](./docs/cnn/yolo/InputSize.md)  
 * [针对Yolo训练结果的评估验证](./docs/cnn/yolo/Evaluation.md)  
+* [数据增强技术的分析](./docs/cnn/DataAugmentation.md)  
 
 ### 数据基础知识  
 
