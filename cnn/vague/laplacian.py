@@ -1,58 +1,34 @@
-import matplotlib.pyplot as plt
-import numpy as np
-import operator
-import os
-
 import cv2
+import numpy as np
 
 if __name__ == '__main__':
-    folder_path = '../../data/vague'
-    files = os.listdir(folder_path)
-    img_blur = {}
-    img_sobely = {}
-    img_scharr = {}
-    for file in files:
-        img = cv2.imread(os.path.join(folder_path, file))
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        blur = cv2.Laplacian(gray, cv2.CV_64F).var()
+    # 读取图像
+    gray_image = cv2.imread('../../data/vague/16.png', cv2.IMREAD_GRAYSCALE)
+    image = cv2.imread('../../data/vague/16.png')
 
-        sobelx = cv2.Sobel(img, cv2.CV_64F, 1, 0, ksize=5)
-        sobely = cv2.Sobel(img, cv2.CV_64F, 0, 1, ksize=5)
-        gradient_magnitude = np.sqrt(sobelx ** 2 + sobely ** 2)
-        sharpness = np.mean(gradient_magnitude)
+    # 将图像分割成RGB通道
+    b, g, r = cv2.split(image)
 
-        scharrx = cv2.Scharr(img, cv2.CV_64F, 1, 0)
-        scharry = cv2.Scharr(img, cv2.CV_64F, 0, 1)
-        gradient_magnitude = np.sqrt(scharrx ** 2 + scharry ** 2)
-        scharr_sharpness = np.mean(gradient_magnitude)
+    # 对图像应用高斯滤波
+    blurred_image_b = cv2.GaussianBlur(b, (3, 3), 0)
+    blurred_image_g = cv2.GaussianBlur(g, (3, 3), 0)
+    blurred_image_r = cv2.GaussianBlur(r, (3, 3), 0)
 
-        img_blur[file[:-4]] = blur
-        img_sobely[file[:-4]] = sharpness
-        img_scharr[file[:-4]] = scharr_sharpness
-        print('%s Laplacian:%d Sobel:%d Scharr:%d' % (file[:-4], blur, sharpness, scharr_sharpness))
+    # 应用拉普拉斯算子
+    laplacian_b = cv2.Laplacian(blurred_image_b, cv2.CV_64F, ksize=1)
+    laplacian_g = cv2.Laplacian(blurred_image_g, cv2.CV_64F, ksize=1)
+    laplacian_r = cv2.Laplacian(blurred_image_r, cv2.CV_64F, ksize=1)
 
-    sorted_img_blur = dict(sorted(img_blur.items(), key=operator.itemgetter(1)))
-    sorted_img_sobely = dict(sorted(img_sobely.items(), key=operator.itemgetter(1)))
-    scharr_img_canny = dict(sorted(img_scharr.items(), key=operator.itemgetter(1)))
+    merge_image = cv2.merge((
+        cv2.convertScaleAbs(laplacian_b),
+        cv2.convertScaleAbs(laplacian_g),
+        cv2.convertScaleAbs(laplacian_r)
+    ))
 
-    fig, ax1 = plt.subplots(figsize=(15, 8))
+    enhanced_image = cv2.addWeighted(image, 1.0, merge_image, 1.0, 0.0)
 
-    # 绘制折线图
-    ax1.plot(list(sorted_img_blur.keys()), list(sorted_img_blur.values()), 'g-')
-    ax1.set_xlabel('图片序号', fontproperties='SimHei')
-    ax1.set_ylabel('Laplacian', color='g')
-    plt.xticks(rotation=60)
-    plt.title('图片模糊度分析', fontproperties='SimHei')
-
-    ax2 = ax1.twinx()
-    ax2.plot(list(sorted_img_blur.keys()), list(sorted_img_sobely.values()), 'b-')
-    ax2.set_ylabel('Sobel', color='b')
-
-    # ax3 = ax1.twinx()
-    # ax3.plot(list(scharr_img_canny.keys()), list(scharr_img_canny.values()), 'r-')
-    # ax3.set_ylabel('Scharr', color='r')
-
-    # 显示图表
-    plt.show()
-
-
+    # 显示原始图像、拉普拉斯算子处理后的图像和增强后的图像
+    cv2.imshow('Original Image', image)
+    cv2.imshow('Enhanced Image', enhanced_image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
