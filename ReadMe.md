@@ -48,6 +48,7 @@ pip install -r requirements.txt
 * [针对Yolo训练结果的评估验证](./docs/cnn/yolo/Evaluation.md)  
 * [数据增强技术的分析](./docs/cnn/DataAugmentation.md)  
 * [边缘检测图像增强技术](./docs/cnn/Vague.md)  
+* [yolo网络层剖析](./docs/cnn/yolo/Network.md)  
 
 ### 数据基础知识  
 
