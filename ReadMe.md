@@ -50,6 +50,10 @@ pip install -r requirements.txt
 * [边缘检测图像增强技术](./docs/cnn/Vague.md)  
 * [yolo网络层剖析](./docs/cnn/yolo/Network.md)  
 
+### 2.2 其他图像检测算法
+
+* [直线检测算法集合](./docs/cnn/LaneDetection.md)  
+
 ### 数据基础知识  
 
 * [统计计算基础知识](https://www.math.pku.edu.cn/teachers/lidf/docs/statcomp/html/_statcompbook/index.html)
