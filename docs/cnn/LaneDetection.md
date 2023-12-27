@@ -120,4 +120,5 @@ LSWMS（Line Segment and Width Maximization Segmentation）是一种用于直线
 ## 参考文献
 
 * [直线检测算法汇总](https://mp.weixin.qq.com/s/eOLTnrIPaMoiRneN_CbaIA)
+* [直线检测算法](https://zhuanlan.zhihu.com/p/500594323?utm_id=0)
 * [车道线检测SOTA模型CLRNet复现](https://aistudio.baidu.com/projectdetail/6724057?channelType=0&channel=0)
