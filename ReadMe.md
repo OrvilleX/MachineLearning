@@ -54,6 +54,10 @@ pip install -r requirements.txt
 
 * [直线检测算法集合](./docs/cnn/LaneDetection.md)  
 
+### 2.3 LLM大模型相关  
+
+* [Transformer模型基础知识](./docs/llm/Transformer.md)  
+
 ### 数据基础知识  
 
 * [统计计算基础知识](https://www.math.pku.edu.cn/teachers/lidf/docs/statcomp/html/_statcompbook/index.html)
