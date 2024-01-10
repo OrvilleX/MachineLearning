@@ -58,6 +58,10 @@ pip install -r requirements.txt
 
 * [Transformer模型基础知识](./docs/llm/Transformer.md)  
 
+### 2.4 机器学习基础
+
+* [机器学习中的学习方式](./docs/ml/Learning.md)  
+
 ### 数据基础知识  
 
 * [统计计算基础知识](https://www.math.pku.edu.cn/teachers/lidf/docs/statcomp/html/_statcompbook/index.html)
@@ -74,9 +78,13 @@ pip install -r requirements.txt
 * [泊松分布](https://www.matongxue.com/madocs/858)  
 * [伯努利分布](https://www.cnblogs.com/jmilkfan-fanguiju/p/10589773.html)  
 
-## 监督学习  
+## 三、监督学习  
 
 以下算法大多数使用场景主要为分类问题，部分算法基于回归可以实现预测行为。  
+
+### 3.1 监督学习方面
+
+
 
 ### K近邻算法(KNN)  
 
