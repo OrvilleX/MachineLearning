@@ -62,6 +62,10 @@ pip install -r requirements.txt
 
 * [机器学习中的学习方式](./docs/ml/Learning.md)  
 
+### 2.5 机器人基础
+
+* [基础知识内容](./docs/ml/Robotics.md)
+
 ### 数据基础知识  
 
 * [统计计算基础知识](https://www.math.pku.edu.cn/teachers/lidf/docs/statcomp/html/_statcompbook/index.html)
