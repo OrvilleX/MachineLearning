@@ -63,7 +63,5 @@ NN）或Transformer用于文本数据。
 * `灵活性`: 这种方法适用于多种类型的数据和多种不同的任务，包括推荐系统、自然语言处理和计算机视觉等。
 * `数据融合`: 联合嵌入通过将不同类型的数据映射到同一空间，促进了数据间的融合和互操作性。
 
-其代表的技术方案主要有以下几种：
-* `ImageBind`: 由Meta AI贡献的[ImageBind](https://github.com/facebookresearch/ImageBind)开源方案，可以实现将6中数据联合嵌入，也是目前能够实现多种数据的联合嵌入方案。  
-* `CLIP`: 由OpenAI贡献的[CLIP](https://github.com/openai/CLIP.git)可以实现文本与图片的联合分析。
+其代表的技术方案可以通过Meta AI的[ImageBind](https://github.com/facebookresearch/ImageBind)了解其具体的作用以及应用方式。
 
