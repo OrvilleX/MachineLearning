@@ -1,3 +1,4 @@
+import huggingface_hub
 from huggingface_hub import notebook_login
 from datasets import load_dataset
 from transformers import AutoImageProcessor, AutoModelForObjectDetection, TrainingArguments, Trainer
@@ -5,7 +6,7 @@ import numpy as np
 import torch
 import albumentations
 
-notebook_login()
+huggingface_hub.login()
 checkpoint = "facebook/detr-resnet-50"
 image_processor = AutoImageProcessor.from_pretrained(checkpoint)
 
