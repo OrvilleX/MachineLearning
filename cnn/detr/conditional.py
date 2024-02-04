@@ -101,3 +101,7 @@ def train():
 
     trainer.train()
     trainer.push_to_hub()
+
+
+if __name__ == "__main__":
+    train()
