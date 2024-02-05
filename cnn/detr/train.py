@@ -7,7 +7,7 @@ import torch
 import albumentations
 
 huggingface_hub.login()
-checkpoint = "facebook/detr-resnet-50"
+checkpoint = "microsoft/conditional-detr-resnet-50"
 image_processor = AutoImageProcessor.from_pretrained(checkpoint)
 
 
@@ -80,9 +80,9 @@ def train():
         ignore_mismatched_sizes=True,
     )
     training_args = TrainingArguments(
-        output_dir="detr-resnet-50_finetuned_cppe5",
+        output_dir="con-detr-resnet-50_finetuned_cppe5",
         per_device_train_batch_size=8,
-        num_train_epochs=10,
+        num_train_epochs=20,
         fp16=True,
         save_steps=200,
         logging_steps=50,
