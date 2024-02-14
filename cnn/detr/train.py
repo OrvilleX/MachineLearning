@@ -105,4 +105,14 @@ def train():
 
 
 if __name__ == "__main__":
-    train()
+    # 指定每个分割的文件路径
+    data_files = {
+        "train": "path/to/train.jsonl",
+        "validation": "path/to/validation.jsonl",
+        "test": "path/to/test.jsonl"
+    }
+
+    # 加载数据集，自动识别不同的分割
+    dataset = load_dataset('json', data_files=data_files)
+    categories = dataset["train"].features["objects"].feature["category"].names
+    # train()
