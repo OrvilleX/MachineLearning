@@ -39,7 +39,6 @@ def transform_aug_ann(examples):
     )
     for image, objects in zip(examples["image"], examples["annotations"]):
         image = np.array(image.convert("RGB"))[:, :, ::-1]
-        out = transform(image=image, bboxes=objects["bbox"], category=objects["category"])
         out = transform(image=image, bboxes=[obj['bbox'] for obj in objects], category=[obj['category_id']
                                                                                         for obj in objects])
 
@@ -108,16 +107,9 @@ def train():
 if __name__ == "__main__":
     # 指定每个分割的文件路径
     data_files = {
-        "train": "path/to/train.jsonl",
-        "validation": "path/to/validation.jsonl",
-        "test": "path/to/test.jsonl"
         "train": "F:\\hszb\\vest\\train\\metadata.jsonl",
         "validation": "F:\\hszb\\vest\\val\\metadata.jsonl"
     }
-
-    # 加载数据集，自动识别不同的分割
-    dataset = load_dataset('json', data_files=data_files)
-    categories = dataset["train"].features["objects"].feature["category"].names
     dataset = load_dataset("imagefolder", data_dir="F:\\hszb\\vest")
     dataset.push_to_hub("whereAlone/vest")
     # categories = dataset["train"].features["annotations"].feature["category"].names
