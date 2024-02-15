@@ -50,7 +50,7 @@ def val_formatted_anns(image_id, objects):
 
 # Save images and annotations into the files torchvision.datasets.CocoDetection expects
 def save_cppe5_annotation_file_images(cppe5):
-    categories = cppe5["test"].features["objects"].feature["category"].names
+    categories = cppe5.features["objects"].feature["category"].names
     id2label = {index: x for index, x in enumerate(categories, start=0)}
     output_json = {}
     path_output_cppe5 = f"{os.getcwd()}/cppe5/"
@@ -98,10 +98,10 @@ def collate_fn(batch):
 
 def eval():
     cppe5 = load_dataset("cppe-5")
-    im_processor = AutoImageProcessor.from_pretrained("whereAlone/detr-resnet-50_finetuned_cppe5")
+    im_processor = AutoImageProcessor.from_pretrained("whereAlone/con-detr-resnet-50_finetuned_cppe5")
     path_output_cppe5, path_anno = save_cppe5_annotation_file_images(cppe5["test"])
     test_ds_coco_format = CocoDetection(path_output_cppe5, im_processor, path_anno)
-    model = AutoModelForObjectDetection.from_pretrained("whereAlone/detr-resnet-50_finetuned_cppe5")
+    model = AutoModelForObjectDetection.from_pretrained("whereAlone/con-detr-resnet-50_finetuned_cppe5")
     module = evaluate.load("ybelkada/cocoevaluate", coco=test_ds_coco_format.coco)
     val_dataloader = torch.utils.data.DataLoader(
         test_ds_coco_format, batch_size=8, shuffle=False, num_workers=4, collate_fn=collate_fn
@@ -120,8 +120,7 @@ def eval():
             outputs = model(pixel_values=pixel_values, pixel_mask=pixel_mask)
 
             orig_target_sizes = torch.stack([target["orig_size"] for target in labels], dim=0)
-            results = im_processor.post_process(outputs,
-                                                orig_target_sizes)  # convert outputs of model to Pascal VOC format (xmin, ymin, xmax, ymax)
+            results = im_processor.post_process_object_detection(outputs, 0, orig_target_sizes)
 
             module.add(prediction=results, reference=labels)
             del batch

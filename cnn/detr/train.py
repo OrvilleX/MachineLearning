@@ -8,6 +8,7 @@ import albumentations
 
 huggingface_hub.login()
 checkpoint = "microsoft/conditional-detr-resnet-50"
+checkpoint = "facebook/detr-resnet-50-dc5"
 image_processor = AutoImageProcessor.from_pretrained(checkpoint)
 
 
@@ -36,11 +37,13 @@ def transform_aug_ann(examples):
         ],
         bbox_params=albumentations.BboxParams(format="coco", label_fields=["category"])
     )
-    for image, objects in zip(examples["image"], examples["objects"]):
+    for image, objects in zip(examples["image"], examples["annotations"]):
         image = np.array(image.convert("RGB"))[:, :, ::-1]
         out = transform(image=image, bboxes=objects["bbox"], category=objects["category"])
+        out = transform(image=image, bboxes=[obj['bbox'] for obj in objects], category=[obj['category_id']
+                                                                                        for obj in objects])
 
-        area.append(objects["area"])
+        area.append([obj['area'] for obj in objects])
         images.append(out["image"])
         bboxes.append(out["bboxes"])
         categories.append(out["category"])
@@ -65,14 +68,12 @@ def collate_fn(batch):
 
 
 def train():
-    cppe5 = load_dataset("cppe-5")
-    categories = cppe5["train"].features["objects"].feature["category"].names
+    # cppe5 = load_dataset("whereAlone/vest")
+    cppe5 = load_dataset("imagefolder", data_dir="F:\\hszb\\vest")
+    categories = ['f_vest', 'b_vest', 'f_scarf', 'b_scarf', 'f_belt', 'b_belt']
     id2label = {index: x for index, x in enumerate(categories, start=0)}
     label2id = {v: k for k, v in id2label.items()}
-    remove_idx = [590, 821, 822, 875, 876, 878, 879]
-    keep = [i for i in range(len(cppe5["train"])) if i not in remove_idx]
-    cppe5["train"] = cppe5["train"].select(keep)
-    cppe5["train"] = cppe5["train"].with_transform(transform_aug_ann)
+    cppe5["validation"] = cppe5["validation"].with_transform(transform_aug_ann)
     model = AutoModelForObjectDetection.from_pretrained(
         checkpoint,
         id2label=id2label,
@@ -80,8 +81,8 @@ def train():
         ignore_mismatched_sizes=True,
     )
     training_args = TrainingArguments(
-        output_dir="con-detr-resnet-50_finetuned_cppe5",
-        per_device_train_batch_size=8,
+        output_dir="detr-resnet-50_finetuned_cppe5",
+        per_device_train_batch_size=2,
         num_train_epochs=20,
         fp16=True,
         save_steps=200,
@@ -96,7 +97,7 @@ def train():
         model=model,
         args=training_args,
         data_collator=collate_fn,
-        train_dataset=cppe5["train"],
+        train_dataset=cppe5["validation"],
         tokenizer=image_processor,
     )
 
@@ -110,9 +111,14 @@ if __name__ == "__main__":
         "train": "path/to/train.jsonl",
         "validation": "path/to/validation.jsonl",
         "test": "path/to/test.jsonl"
+        "train": "F:\\hszb\\vest\\train\\metadata.jsonl",
+        "validation": "F:\\hszb\\vest\\val\\metadata.jsonl"
     }
 
     # 加载数据集，自动识别不同的分割
     dataset = load_dataset('json', data_files=data_files)
     categories = dataset["train"].features["objects"].feature["category"].names
+    dataset = load_dataset("imagefolder", data_dir="F:\\hszb\\vest")
+    dataset.push_to_hub("whereAlone/vest")
+    # categories = dataset["train"].features["annotations"].feature["category"].names
     # train()
