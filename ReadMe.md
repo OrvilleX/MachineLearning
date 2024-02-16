@@ -49,6 +49,7 @@ pip install -r requirements.txt
 * [数据增强技术的分析](./docs/cnn/DataAugmentation.md)  
 * [边缘检测图像增强技术](./docs/cnn/Vague.md)  
 * [yolo网络层剖析](./docs/cnn/yolo/Network.md)  
+* [yolo各个版本的使用方式](./docs/cnn/yolo/Usage.md)
 
 ### 2.2 其他图像检测算法
 
