@@ -1,5 +1,4 @@
 mglearn==0.2.0
-torch>=1.12.1+cu113
 numpy>=1.22.3
 matplotlib>=3.7.0
 scipy>=1.10.0

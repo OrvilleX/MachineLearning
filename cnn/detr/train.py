@@ -7,7 +7,6 @@ import torch
 import albumentations
 
 huggingface_hub.login()
-checkpoint = "microsoft/conditional-detr-resnet-50"
 checkpoint = "facebook/detr-resnet-50-dc5"
 image_processor = AutoImageProcessor.from_pretrained(checkpoint)
 

@@ -37,6 +37,12 @@ def read_face_from_video(videoPath, knownFaceDir, faster=True, debug=False):
     :return: 视频中匹配的人脸图片，标识
     """
     video_capture = cv2.VideoCapture(videoPath)
+    fps = video_capture.get(cv2.CAP_PROP_FPS)
+    width = int(video_capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(video_capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    output_file = 'output_video.mp4'
+    out = cv2.VideoWriter(output_file, cv2.VideoWriter_fourcc('m','p','4','v'), fps, (width, height), isColor=True)
+
     img_with_name = {}
     known_face_encodings, known_face_names = load_known_face_encodings(knownFaceDir)
     while video_capture.isOpened():
@@ -77,11 +83,13 @@ def read_face_from_video(videoPath, knownFaceDir, faster=True, debug=False):
             else:
                 crop_img = rgb_small_frame[top:bottom, left:right]
                 img_with_name[name] = crop_img
-        cv2.imshow('Video', rgb_small_frame)
+        out.write(rgb_small_frame[:, :, ::-1])
+        cv2.imshow('Video', rgb_small_frame[:, :, ::-1])
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
     video_capture.release()
     cv2.destroyAllWindows()
+    out.release()
     return img_with_name
 
 
