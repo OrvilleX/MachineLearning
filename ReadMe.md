@@ -11,6 +11,7 @@
 ### 图片特征提取
 
 * [SigLIP 图文对照模型](./siglip/ReadMe.md)  
+* [InternVideo2 多模态视频理解模型](./internvideo/ReadMe.md)  
 
 
 #### 注意以下文档链接可能需要访问外网，所以请保证网络的正常。  
