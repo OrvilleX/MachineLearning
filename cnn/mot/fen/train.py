@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Wed May 29 10:32:21 2019
-
-@author: santiago
-"""
-
 import os
 import time
 import torch

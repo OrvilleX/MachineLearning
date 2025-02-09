@@ -8,6 +8,11 @@
 
 * [Kokore适合边缘设备的TTS解决方案](./kokore/ReadMe.md)  
 
+### 图片特征提取
+
+* [SigLIP 图文对照模型](./siglip/ReadMe.md)  
+
+
 #### 注意以下文档链接可能需要访问外网，所以请保证网络的正常。  
 
 > 对于`Spark ML`的具体教程将在[独立的文档](./spark/ReadMe.md)中进行说明，不在本教程上下进行介绍。  
