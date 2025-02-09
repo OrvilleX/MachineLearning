@@ -94,8 +94,7 @@ W-NMS认为Traditional NMS每次迭代所选出的最大得分框未必是精确
 
 ### 使用方式
 
-这里借鉴参考了`ZFTurbo`的关于`Weighted boxes fusion`的代码，具体可以参考[本项目](https://github.com/OrvilleX/MachineLearning/tree/master/cnn)，
-同时本文也可以需要的部分截取了其中的部分[代码](/cnn/nms/weightedNMS.py)，如果需要像使用类库一样去使用其提供各类的函数可以采用下述方式进行操作。  
+这里借鉴参考了`ZFTurbo`的关于`Weighted boxes fusion`的代码，同时本文也将需要的部分截取了其中的部分[代码](./weightedNMS.ipynb)，如果需要像使用类库一样去使用其提供各类的函数可以采用下述方式进行操作。  
 
 ```bash
 pip install ensemble-boxes
@@ -137,7 +136,7 @@ pip install ensemble-boxes
 ### 使用方式
 
 主要参考了[KL-Loss](https://github.com/yihui-he/KL-Loss/tree/master)中关于Softer-NMS的部分实现代码并提取
-经过简单的改动后再本项目[此文件](/cnn/nms/softerNMS.py)。  
+经过简单的改动后再本项目[此文件](./softerNMS.ipynb)。  
 
 ## 6. Adaptive-NMS
 
@@ -160,7 +159,7 @@ Adaptive NMS应用了动态抑制策略，通过设计计了一个Density-subnet
 
 ### 使用方式
 
-ANMS目前可通过参考[本文档](https://github.com/BAILOOL/ANMS-Codes)对应的python实现部分。  
+ANMS目前可通过参考[本开源项目](https://github.com/BAILOOL/ANMS-Codes)对应的python实现部分。  
 
 ## 7. Weighted boxes fusion（加权框融合）
 
@@ -174,7 +173,7 @@ ANMS目前可通过参考[本文档](https://github.com/BAILOOL/ANMS-Codes)对�
 
 ### 使用方式
 
-其本身与W-NMS类似，直接可以使用安装库进行使用，也可以通过本项目中的[代码](/cnn/nms/wbf.py)来进行学习了解。  
+其本身与W-NMS类似，直接可以使用安装库进行使用，也可以通过本项目中的[jupyterlab例子](./wbf.ipynb)来进行学习了解。  
 
 ```bash
 pip install ensemble-boxes
@@ -189,7 +188,8 @@ Matrix NMS 通过构建候选框之间的 IoU 矩阵，对所有候选框进行�
 由于需要构造并处理较大的候选框矩阵，其在候选框数量庞大时可能会带来较高的计算复杂度和内存占用，在实时性要求较高的场景下可能存在性能瓶颈。
 
 ### 使用方式
-Matrix NMS 的具体实现可参考一些实例分割开源项目，部分库中已经提供了相应的接口。例如，在特定的实例分割模型中，可以直接调用相应模块完成后处理操作。
+
+这里通过截取PaddleDetection中对应的实现，通过该[jupyterlab例子](./matrixNMS.ipynb)中进行学习了解。
 
 ## 9. Learning NMS / End-to-End NMS
 
