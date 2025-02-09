@@ -18,7 +18,7 @@
 ### 机器学习基础
 
 * [基于numpy实现的机器学习算法](./numpy/ReadMe.md): 主要是讲述底层的算法的逻辑，实际使用中往往采用第三方库来实现  
-* []()
+* [基于sklearn的机器学习算法](./sklearn/ReadMe.md): 主要是讲述如何使用第三方类库快速使用成熟的算法  
 
 ### TTS解决方案
 
@@ -70,10 +70,6 @@
 * [yolo网络层剖析](./docs/cnn/yolo/Network.md)  
 * [yolo各个版本的使用方式](./docs/cnn/yolo/Usage.md)
 
-### 2.2 其他图像检测算法
-
-* [直线检测算法集合](./docs/cnn/LaneDetection.md)  
-
 ### 2.3 LLM大模型相关  
 
 * [Transformer模型基础知识](./docs/llm/Transformer.md)  
@@ -107,8 +103,6 @@
 以下算法大多数使用场景主要为分类问题，部分算法基于回归可以实现预测行为。  
 
 ### 3.1 监督学习方面
-
-
 
 ### K近邻算法(KNN)  
 
