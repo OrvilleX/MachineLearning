@@ -22,16 +22,21 @@
 
 ### 图片特征提取
 
-* [SigLIP 图文对照模型](./siglip/ReadMe.md)  
-* [InternVideo2 多模态视频理解模型](./internvideo/ReadMe.md)  
+* [SigLIP 图文对照模型](./siglip/ReadMe.md): 大量的多模态模型的图像特种提取必使用的模型，本文档基于目前主流的`siglip-so400m-patch14-384`模型进行编写，开发多模态大模型必须掌握的图像特征提取库
+
+* [InternVideo2 多模态视频理解模型](./internvideo/ReadMe.md): 由于上海人工智能实验室（General Vision Team of Shanghai AI Laboratory）推出的针对视频理解的模型，目前针对视频理解的论文逐渐将其作为融合siglip来实现针对视频&图片场景的多模态大模型的基础组件  
 
 ### 目标检测技术
 
 * [基于yolo目标检测系列](./yolo/ReadMe.md)  
 
-#### 注意以下文档链接可能需要访问外网，所以请保证网络的正常。  
+### 其他技术
 
-> 对于`Spark ML`的具体教程将在[独立的文档](./spark/ReadMe.md)中进行说明，不在本教程上下进行介绍。  
+* [Spark ML的使用方式](./spark/ReadMe.md): 目前该技术的应用场景逐步减少，本教程也是基于较老的版本进行编写，读者需要根据自己的使用
+以及目前最新的文档结合进行对应的API调整。  
+
+
+—————— 以下为未重构的老版本 ————————
 
 ### 项目结构  
 
