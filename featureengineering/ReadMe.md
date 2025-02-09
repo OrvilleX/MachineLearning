@@ -36,3 +36,21 @@ pd.get_dummies(demo_frame, columns=['Integer Feature', 'Categorical Feature'])
 通过上面示例的方法执行后我们可以看到最终模型与决策树一致，如果我们想要丰富特征表示，此时我们就需要添加原始数据的交互特征（interaction feature）
 与多项式特征（polynomial feature），最终代码我们依然通过上述代码文件中进行表现，具体方法可以参考`interactionMain`方法。最后就是多项式特征
 其也比较好理解，就是基于原始数据的平方、立方等组成多个特征的数据，具体可以参考`polynomialMain`方法。  
+
+## 特征归一化  
+
+很多算法对数据存在敏感性，由于数据计量单位的不一致性很有可能会被某些数值较大的数据破坏最终的算法效果，为此
+我们需要对数据进行归一化处理从而保证算法的效率。首先我们可以通过以下文档进一步的了解归一化的作用：  
+
+* [常见归一化算法](https://blog.csdn.net/zenghaitao0128/article/details/78361038)  
+* [归一化的解释](https://www.zhihu.com/question/20455227)  
+* [机器学习「输出概率化」：一种无监督的方法](https://zhuanlan.zhihu.com/p/33873947)  
+
+了解完以上的基本概念后，具体使用的算法由以下几种：  
+
+1. 最大最小标准化方法
+2. [Z-score标准化方法](https://blog.csdn.net/Orange_Spotty_Cat/article/details/80312154)
+3. 非线性归一化
+4. L2范数归一化方法  
+
+对于如何使用sklearn可以参考本[示例代码](scaler.py)  
