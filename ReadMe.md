@@ -29,6 +29,8 @@
 ### 目标检测技术
 
 * [基于yolo目标检测系列](./yolo/ReadMe.md)  
+* [DETR技术的应用方式](./detr/ReadMe.md)  
+* [face_recognition人脸识别应用方式](./facerecognition/ReadMe.md)
 
 ### 其他技术
 
