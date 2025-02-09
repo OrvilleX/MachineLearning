@@ -18,7 +18,7 @@ pip install opencv-contrib-python
 * 计算密集，特别是对于高分辨率图像;
 * 对于非线性形状或复杂形状的检测效率较低;
 
-其算法在OpenCV中已经具备对应的算法模型库，可以直接调用进行分析，可以参考[示例代码](../../cnn/lane/example.py)中的`hough_line`方法。
+其算法在OpenCV中已经具备对应的算法模型库，可以直接调用进行分析，可以参考[示例代码](example.py)中的`hough_line`方法。
 其中组合使用了`Canny`边缘检测算法，其是一种非常流行的边缘检测算法，用于从图像中提取有用的结构信息并减少要处理的数据量。Canny边缘检测器是一
 个多阶段的算法，能够检测到图像中的宽边缘和细边缘。
 
@@ -51,7 +51,7 @@ lines = cv2.HoughLines(image, rho, theta, threshold)
 概率霍夫变换的基本原理与传统霍夫变换相似，都是将图像空间中的直线检测问题转换为参数空间中的峰值检测问题。不同之处在于，概率霍夫变换不是对图像中的
 所有边缘点进行考虑，而是随机选取一部分点来估计直线参数。由于采用随机抽样，结果可能会有一定的随机性，特别是在边缘点较少的情况下。  
 
-其算法在OpenCV中已经具有对应的算法模型库，可以直接调用进行分析，可以参考[示例代码](../../cnn/lane/example.py)中的`hougnp_line`方法。
+其算法在OpenCV中已经具有对应的算法模型库，可以直接调用进行分析，可以参考[示例代码](example.py)中的`hougnp_line`方法。
 
 ```python
 lines = cv2.HoughLinesP(image, rho, theta, threshold, minLineLength, maxLineGap)
@@ -68,7 +68,7 @@ lines = cv2.HoughLinesP(image, rho, theta, threshold, minLineLength, maxLineGap)
 方向，LSD算法从高梯度区域开始，沿着一致的梯度方向生长线段，并使用几何和统计测试来验证这些线段。这种方法以子像素精度提供高度准确的线段检测，几乎不
 需要用户调整参数，使其在机器视觉、图像分析以及地图制作等领域中非常有用。尽管如此，它在处理复杂背景或线段密集的图像时可能面临挑战。  
 
-该算法在OpenCV中具备对应的算法，可以通过学习[示例代码](../../cnn/lane/example.py)中的`lsd_line`方法了解其使用，关于`createLineSegmentDetector`
+该算法在OpenCV中具备对应的算法，可以通过学习[示例代码](/example.py)中的`lsd_line`方法了解其使用，关于`createLineSegmentDetector`
 的详细使用以及介绍如下。  
 
 ```python
@@ -92,7 +92,7 @@ lsd = cv2.createLineSegmentDetector(_refine, _scale, _sigma_scale, _quant, _ang_
 其是一种用于直线检测的算法，它被设计为快速且高效，特别适用于实时应用。FLD算法的主要目标是在图像中快速准确地检测出直线，同时保持对不同条件的鲁棒性，
 如不同的光照条件、图像噪声等。  
 
-该算法在OpenCV中具备对应的算法，可以通过学习[示例代码](../../cnn/lane/example.py)中的`fld_line`方法了解其使用，关于`createFastLineDetector`
+该算法在OpenCV中具备对应的算法，可以通过学习[示例代码](example.py)中的`fld_line`方法了解其使用，关于`createFastLineDetector`
 的详细使用以及介绍如下。  
 
 ```python
