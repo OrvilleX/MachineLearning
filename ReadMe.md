@@ -20,6 +20,11 @@
 * [基于numpy实现的机器学习算法](./numpy/ReadMe.md): 主要是讲述底层的算法的逻辑，实际使用中往往采用第三方库来实现  
 * [基于sklearn的机器学习算法](./sklearn/ReadMe.md): 主要是讲述如何使用第三方类库快速使用成熟的算法  
 * [预处理技术](./preprocessing/ReadMe.md): 其主要包含针对机器学习工程中针对数据的预处理的部分的算法  
+* [特征工程](./featureengineering/ReadMe.md): 主要是围绕各类数据分析场景下针对数据的特征表示的算法  
+
+### 数据挖掘
+
+* [挖掘频繁项集](./frequentItemsets/ReadMe.md): 主要是采用numpy与sklearn的方式实现这类算法    
 
 ### TTS解决方案
 
@@ -85,67 +90,6 @@
 
 * [泊松分布](https://www.matongxue.com/madocs/858)  
 * [伯努利分布](https://www.cnblogs.com/jmilkfan-fanguiju/p/10589773.html)  
-
-### 挖掘频繁项集  
-
-如果读者看过《数据挖掘 概念与技术》书，大家肯定可以看到对于数据挖掘中其中一个重要的部分就是挖掘数据其中的规律。其中比较重要的就是挖掘
-其中频繁出现的数据组合以及他们的关联关系，当然这需要建立对于业务的深入了解的基础上，在此基础上我们就可以采用对应的非监督学习的算法便于
-从众多的数据组合中挖掘我们感兴趣的频繁项集出来从而便于我们更好的分析数据其中的奥秘，下面我们将介绍常用的Apriori算法和FP-growth算法。  
-
-首先介绍的Apriori算法是发现频繁项集的一种方法。该算法的三个输入参数分别是数据集、最小支持度和最小置信度。该算法首先会生成所有单个物品
-的项集列表。接着扫描记录来查看哪些项集满足最小支持度要求，那些不满足最小支持度的集合会被去掉。然后，对剩下来的集合进行组合以生成包含两个
-元素的项集。接下来，再重新扫描记录，去掉不满足最小支持度的项集。该过程重复进行直到所有项集都被去掉。由于sklearn并没有包含该类算法，所以
-读者需要额外安装其他库`pip install efficient-apriori`进行安装，然后可以按照如下算法进行编写：  
-
-* [Numpy原始算法](/frequentItemsets/aprioriWithRaw.py)  
-* [第三方库算法](/frequentItemsets/aprioriWithLib.py)  
-
-Apriori算法对于每个潜在的频繁项集都会扫描数据集判定给定模式是否频繁，这在小数据量的情况下并不会存在问题，但是当我们需要面对更大数据集的
-时候，这个问题将会被放大。由此我们就需要一个更高效的算法，即FP-growth算法，该算法能够高效地的发现频繁项集，并发现关联规则。
-FP-growth只需要对数据库进行两次扫描即可，所以整体提升的效率非常可观。由于sklearn本身没有提供该算法API，所以读者需要安装额外的库进行
-支持，如`pip install pyfpgrowth`。  
-
-* [Numpy原始算法](/frequentItemsets/fpgrowthWithRaw.py)  
-* [第三方库算法](/frequentItemsets/fpgrothWithLib.py)  
-
-## 特征工程
-
-其核心可以理解是为了解决特定应用的最佳数据表示问题，它是数据科学家和机器学习从业者尝试解决现实世界问题时的主要任务之一。用正确的方式表示
-数据，对监督模型性能的影响比所选择的精确参数还要大。  
-
-### 分类变量  
-
-前面的例子我们一直假设数据是由浮点数组成的二维数组，其中每一列是描述数据点的连续特征（conmtiinuous feature）。对于许多应用而言，数据
-的搜集方式并不是这样。一种特别常见的特征类型就是分类特征（categorical feature），也叫离散特征（disccrete feature）。为了表示这种
-类型数据，我们最常用的方法就是one-hot编码（one-hot-encoding）或N取一编码（one-out-of-N encoding），也叫虚拟变量（dummy vari
-able）。  
-
-其背后的思想就是将一个分类变量替换为一个或多个新特征，新特征取值为0和1。这里我们可以举例如公司性质特征，可以存在国有，私有，外资等类型，为了
-利用one-hot来表示，我们将该特征替换为多个特征，即国有企业特征、私有企业特征和外资企业特征，对于每个数据如果属于对应类型，则对应特征值为1，
-其他特征为0。下面我们将利用第三方类库来帮助我们实现这一目的。  
-
-* [基于pands的One-Hot算法](/featureengineering/onehot.py)  
-
-由于pandas的get_dummies函数将所有数字看作是连续的，不会为其创建虚拟变量。为了解决这个问题，你可以使用scikit-learn的OneHotEncoder，
-指定哪些变量是连续、哪些变量是离散的，你也可以将数据框中的数值转换为字符串。当然利用get_dummies也是可以办到了，比如下面这样使用：  
-
-```python
-demo_frame['Integer Feature'] = demo_freame['Integer Feature'].astype(str)
-pd.get_dummies(demo_frame, columns=['Integer Feature', 'Categorical Feature'])
-```  
-
-### 分箱、交互与多项式特征    
-
-通过前面学习我们知道，线性模型只能对线性关键建模，对于单个特征的情况就是直线。决策树可以构建更为复杂的数据模型，但这强烈依赖于数据表示。
-有一种方法可以让线性模型在连续数据上变得更加强大，就是使用特征分箱（binning，也叫离散化）将其划分为多个特征。比如某个特征具备输入的范围
-（10~20），那么我们就可以将其划分为固定的几个箱子。如10个，那么每个箱子都是均匀的划分了这些值，具体如何使用第三方类库完成我们可以参入下
-面的代码。  
-
-* [基于pands的分箱算法](/featureengineering/binningAndFeature.py)  
-
-通过上面示例的方法执行后我们可以看到最终模型与决策树一致，如果我们想要丰富特征表示，此时我们就需要添加原始数据的交互特征（interaction feature）
-与多项式特征（polynomial feature），最终代码我们依然通过上述代码文件中进行表现，具体方法可以参考`interactionMain`方法。最后就是多项式特征
-其也比较好理解，就是基于原始数据的平方、立方等组成多个特征的数据，具体可以参考`polynomialMain`方法。  
 
 
 ## 其他算法与工具  
