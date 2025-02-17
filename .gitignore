@@ -16,6 +16,7 @@ target/
 bin/
 data/
 dependency-reduced-pom.xml
+__pycache__
 
 # Eclipse Project Files
 
