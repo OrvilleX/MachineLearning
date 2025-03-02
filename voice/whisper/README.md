@@ -50,10 +50,10 @@ pip install jupyterlab_widgets
 
 ```bash
 # 下载官方模型
-git clone https://huggingface.co/BELLE-2/Belle-whisper-large-v3-turbo-zh
+git clone https://huggingface.co/whereAlone/faster-whisper-large-v3-zh
 
 # 国内加速
-git clone https://hf-mirror.com/BELLE-2/Belle-whisper-large-v3-turbo-zh
+git clone https://hf-mirror.com/whereAlone/faster-whisper-large-v3-zh
 
 # 安装必要依赖
 pip install transformers==4.37.2 ffmpeg-python faster-whisper==0.10.1 librosa soundfile numpy
@@ -66,7 +66,7 @@ from transformers import pipeline
 
 transcriber = pipeline(
   "automatic-speech-recognition", 
-  model="BELLE-2/Belle-whisper-large-v3-turbo-zh"
+  model="whereAlone/faster-whisper-large-v3-zh"
 )
 
 transcriber.model.config.forced_decoder_ids = (
