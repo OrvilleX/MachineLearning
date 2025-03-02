@@ -13,6 +13,7 @@
 
 
 * [TTS解决方案](#tts解决方案)
+* [ASR解决方案](#asr解决方案)
 * [图片特征提取](#图片特征提取)
 
 ### 机器学习基础
@@ -29,6 +30,10 @@
 ### TTS解决方案
 
 * [Kokore适合边缘设备的TTS解决方案](./kokore/ReadMe.md)  
+
+### ASR解决方案
+
+* [基于faster-whisper的实时音频处理](./voice/whisper/README.md)
 
 ### 图片特征提取
 
