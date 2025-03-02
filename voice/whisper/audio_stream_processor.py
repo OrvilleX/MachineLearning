@@ -1,20 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-"""
-音频流处理工具
-专门用于处理HTTP/HTTPS/RTSP/RTMP协议的持续音频流，按时间分段保存为WAV格式。
-使用ffmpeg-python库确保生成的音频文件兼容faster-whisper。
-
-功能特点:
-- 支持HTTP/HTTPS/RTSP/RTMP协议的持续音频流
-- 使用ffmpeg-python库保证音频格式标准兼容性
-- 自动分段保存为WAV格式
-- 支持开始、暂停、停止操作
-- 支持网络问题的重试机制
-- 支持调试模式
-"""
-
 import os
 import time
 import threading
@@ -117,7 +100,6 @@ class AudioStreamProcessor:
     def _check_ffmpeg(self):
         """检查ffmpeg是否可用"""
         try:
-            # 使用subprocess直接检查ffmpeg版本，而不是使用probe(None)
             subprocess.run(["ffmpeg", "-version"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             self.logger.debug("ffmpeg可用")
         except Exception as e:
