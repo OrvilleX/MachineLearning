@@ -3,6 +3,7 @@
 参考文档
 * [hf国内调优后模型](https://huggingface.co/BELLE-2/Belle-whisper-large-v3-turbo-zh)
 * [微调文档](https://github.com/shuaijiang/Whisper-Finetune)  
+* [基于whisper的在线服务开源项目](https://github.com/ufal/whisper_streaming)  
 
 ## 一、快速使用
 
